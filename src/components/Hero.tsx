@@ -254,7 +254,7 @@ export default function Hero() {
           </div>
 
           {/* ── Right column — OrbitSystem ── */}
-          <div className="hidden lg:flex items-center justify-center w-full h-full min-h-[480px]">
+          <div className="flex items-center justify-center w-full h-full min-h-[320px] lg:min-h-[480px]">
             <OrbitSystem />
           </div>
         </div>
