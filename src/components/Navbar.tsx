@@ -107,7 +107,7 @@ export default function Navbar() {
               <MagneticButton strength={0.3}>
                 <a
                   href={`mailto:${personalInfo.email}`}
-                  className="px-5 py-2.5 rounded-full btn-primary text-sm font-semibold cursor-none inline-flex items-center gap-1.5"
+                  className="p-4 rounded-full btn-primary text-sm font-semibold cursor-none inline-flex items-center gap-1.5"
                 >
                   <span>Let&apos;s Talk</span>
                   <span className="text-sm">↗</span>

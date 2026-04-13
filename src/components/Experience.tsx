@@ -292,7 +292,6 @@ export default function Experience() {
         aria-label="Scroll to top"
       >
         <ArrowUp size={18} />
-        Top
       </button>
     </section>
   );
