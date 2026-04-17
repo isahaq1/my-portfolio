@@ -19,7 +19,7 @@ export default function Experience() {
   const sectionRef = useRef<HTMLElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
   const timelineRef = useRef<HTMLDivElement>(null);
-  const [showTop, setShowTop] = useState(false);
+
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -103,12 +103,7 @@ export default function Experience() {
     return () => ctx.revert();
   }, []);
 
-  useEffect(() => {
-    const onScroll = () => setShowTop(window.scrollY > window.innerHeight);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+
 
   return (
     <section
@@ -126,19 +121,19 @@ export default function Experience() {
         {/* Modern Header Section */}
         <div
           ref={headerRef}
-          className="mb-16 lg:mb-28 text-center max-w-4xl mx-auto"
+          className="mb-12 lg:mb-20 text-center max-w-4xl mx-auto"
         >
           <div className="reveal-item opacity-0 inline-flex items-center gap-3 mb-6 px-4 py-2 rounded-full bg-white/5 border border-white/10">
             <div className="h-px w-10 bg-indigo-500/70" />
-            <span className="text-xs font-black text-indigo-300 uppercase tracking-[0.4em]">
+            <span className="text-xs font-black text-indigo-300 uppercase tracking-[0.3em]">
               Career Path
             </span>
           </div>
-          <h2 className="reveal-item opacity-0 text-4xl sm:text-5xl lg:text-6xl font-black text-white mb-6 tracking-tight leading-tight">
+          <h2 className="reveal-item opacity-0 text-3xl sm:text-5xl md:text-6xl font-black text-white mb-6 tracking-tighter leading-tight">
             Professional <br />{" "}
             <span className="gradient-text">Milestones.</span>
           </h2>
-          <p className="reveal-item opacity-0 text-base sm:text-lg text-slate-400 font-medium leading-relaxed mx-auto">
+          <p className="reveal-item opacity-0 text-slate-400/80 text-sm sm:text-base md:text-lg max-w-2xl mx-auto leading-relaxed font-light tracking-wide">
             A journey of technical leadership, architectural decisions, and
             constant innovation across high-stakes enterprise projects.
           </p>
@@ -154,7 +149,7 @@ export default function Experience() {
             <div className="timeline-line-path w-full h-full bg-gradient-to-b from-indigo-500 via-purple-500 to-transparent origin-top" />
           </div>
 
-          <div className="space-y-32 lg:space-y-48">
+          <div className="space-y-20 lg:space-y-32">
             {experiences.map((exp, i) => {
               const dateParts = exp.period.split("–");
               const isLeft = i % 2 === 0;
@@ -264,7 +259,7 @@ export default function Experience() {
         </div>
 
         {/* Dynamic CTA Footer Section */}
-        <div className="mt-40 lg:mt-64 p-12 lg:p-20 rounded-[3.5rem] bg-indigo-600/[0.03] border border-indigo-500/10 flex flex-col items-center text-center group hover:bg-indigo-600/[0.05] transition-all duration-1000 reveal-item opacity-0">
+        <div className="mt-24 lg:mt-36 p-10 lg:p-16 rounded-[3rem] bg-indigo-600/[0.03] border border-indigo-500/10 flex flex-col items-center text-center group hover:bg-indigo-600/[0.05] transition-all duration-1000 reveal-item opacity-0">
           <div className="w-20 h-20 rounded-3xl bg-indigo-500/10 flex items-center justify-center mb-10 group-hover:scale-110 group-hover:rotate-6 transition-all duration-700">
             <Sparkles size={40} className="text-indigo-400" />
           </div>
@@ -279,20 +274,13 @@ export default function Experience() {
           </p>
           <a
             href="#contact"
-            className="px-12 py-6 rounded-2xl btn-primary font-black text-sm tracking-[0.2em] uppercase transition-all hover:scale-105 shadow-2xl shadow-indigo-500/20"
+            className="px-8 sm:px-10 py-3.5 sm:py-5 rounded-full btn-primary font-black text-xs sm:text-sm tracking-[0.2em] uppercase transition-all hover:scale-105 shadow-2xl shadow-indigo-500/20 text-center inline-block"
           >
             Initiate Collaboration
           </a>
         </div>
       </div>
-      <button
-        type="button"
-        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-        className={`fixed right-6 bottom-6 z-50 flex items-center gap-2 rounded-full bg-indigo-500/95 px-4 py-3 text-sm font-semibold text-white shadow-2xl shadow-indigo-500/30 transition-all duration-300 ${showTop ? "opacity-100 scale-100" : "opacity-0 scale-90 pointer-events-none"}`}
-        aria-label="Scroll to top"
-      >
-        <ArrowUp size={18} />
-      </button>
+
     </section>
   );
 }

@@ -104,13 +104,13 @@ export default function Navbar() {
             })}
 
             <div className="nav-item opacity-0">
-              <MagneticButton strength={0.3}>
+              <MagneticButton strength={0.3} className="-m-5">
                 <a
                   href={`mailto:${personalInfo.email}`}
-                  className="p-4 rounded-full btn-primary text-sm font-semibold cursor-none inline-flex items-center gap-1.5"
+                  className="px-6 py-2.5 rounded-full btn-primary text-sm font-semibold cursor-none inline-flex items-center gap-2 hover:shadow-[0_0_20px_rgba(99,102,241,0.4)] transition-all duration-300"
                 >
                   <span>Let&apos;s Talk</span>
-                  <span className="text-sm">↗</span>
+                  <span className="text-base">↗</span>
                 </a>
               </MagneticButton>
             </div>

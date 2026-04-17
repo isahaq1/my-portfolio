@@ -81,17 +81,19 @@ export default function SkillsSolarSystem() {
     resize();
     window.addEventListener("resize", resize);
 
-    const draw = () => {
+      const draw = () => {
       const rect = canvas.getBoundingClientRect();
       const w = rect.width;
       const h = rect.height;
       const cx = w / 2;
       const cy = h / 2;
+      const scale = w / 600;
 
       ctx.clearRect(0, 0, w, h);
 
       // Draw orbit rings
-      ORBIT_RADII.forEach((r, i) => {
+      ORBIT_RADII.forEach((baseR, i) => {
+        const r = baseR * scale;
         ctx.beginPath();
         ctx.arc(cx, cy, r, 0, Math.PI * 2);
         ctx.strokeStyle = `rgba(99, 102, 241, ${0.12 - i * 0.03})`;
@@ -102,35 +104,37 @@ export default function SkillsSolarSystem() {
       });
 
       // Draw sun/core glow
-      const sunGrad = ctx.createRadialGradient(cx, cy, 0, cx, cy, 45);
+      const sunSize = 45 * scale;
+      const sunGrad = ctx.createRadialGradient(cx, cy, 0, cx, cy, sunSize);
       sunGrad.addColorStop(0, "rgba(99, 102, 241, 0.9)");
       sunGrad.addColorStop(0.4, "rgba(139, 92, 246, 0.6)");
       sunGrad.addColorStop(0.7, "rgba(168, 85, 247, 0.2)");
       sunGrad.addColorStop(1, "rgba(168, 85, 247, 0)");
       ctx.beginPath();
-      ctx.arc(cx, cy, 45, 0, Math.PI * 2);
+      ctx.arc(cx, cy, sunSize, 0, Math.PI * 2);
       ctx.fillStyle = sunGrad;
       ctx.fill();
 
       // Inner core
-      const coreGrad = ctx.createRadialGradient(cx, cy, 0, cx, cy, 22);
+      const coreSize = 22 * scale;
+      const coreGrad = ctx.createRadialGradient(cx, cy, 0, cx, cy, coreSize);
       coreGrad.addColorStop(0, "rgba(199, 210, 254, 0.95)");
       coreGrad.addColorStop(0.5, "rgba(129, 140, 248, 0.85)");
       coreGrad.addColorStop(1, "rgba(99, 102, 241, 0.7)");
       ctx.beginPath();
-      ctx.arc(cx, cy, 22, 0, Math.PI * 2);
+      ctx.arc(cx, cy, coreSize, 0, Math.PI * 2);
       ctx.fillStyle = coreGrad;
       ctx.fill();
 
       // Core specular
       ctx.beginPath();
-      ctx.arc(cx - 6, cy - 6, 7, 0, Math.PI * 2);
+      ctx.arc(cx - (6 * scale), cy - (6 * scale), 7 * scale, 0, Math.PI * 2);
       ctx.fillStyle = "rgba(255,255,255,0.2)";
       ctx.fill();
 
       // "Skills" text
       ctx.fillStyle = "rgba(255,255,255,0.85)";
-      ctx.font = "bold 9px system-ui, sans-serif";
+      ctx.font = `bold ${Math.max(6, 9 * scale)}px system-ui, sans-serif`;
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
       ctx.fillText("SKILLS", cx, cy);
@@ -146,14 +150,14 @@ export default function SkillsSolarSystem() {
       let foundHover = false;
 
       sorted.forEach((p) => {
-        const r = ORBIT_RADII[p.orbit - 1];
+        const r = ORBIT_RADII[p.orbit - 1] * scale;
         // Elliptical orbit for 3D effect
         const px = cx + Math.cos(p.angle) * r;
         const py = cy + Math.sin(p.angle) * r * 0.4;
 
         // Depth-based scale and opacity
         const depthFactor = 0.6 + 0.4 * ((Math.sin(p.angle) + 1) / 2);
-        const scaledSize = p.size * depthFactor;
+        const scaledSize = p.size * depthFactor * scale;
         const opacity = 0.5 + 0.5 * depthFactor;
 
         // Check hover
@@ -208,9 +212,9 @@ export default function SkillsSolarSystem() {
         ctx.fill();
 
         // Planet text label
-        if (scaledSize > 10 || isHovered) {
+        if (scaledSize > 10 * scale || isHovered) {
           ctx.fillStyle = "rgba(255,255,255,0.9)";
-          ctx.font = `${isHovered ? "bold " : ""}${Math.max(7, Math.round(scaledSize * 0.55))}px system-ui, sans-serif`;
+          ctx.font = `${isHovered ? "bold " : ""}${Math.max(7 * scale, Math.round(scaledSize * 0.55))}px system-ui, sans-serif`;
           ctx.textAlign = "center";
           ctx.textBaseline = "middle";
           ctx.fillText(p.name, px, py);

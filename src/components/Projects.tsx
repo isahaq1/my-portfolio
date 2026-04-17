@@ -17,7 +17,7 @@ import MagneticButton from "./MagneticButton";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const categories = ["All", "Enterprise", "Open Source", "DevOps"];
+
 
 function TiltCard({
   children,
@@ -95,12 +95,7 @@ export default function Projects() {
   const headerRef = useRef<HTMLDivElement>(null);
   const spotlightRef = useRef<HTMLDivElement>(null);
   const gridRef = useRef<HTMLDivElement>(null);
-  const [activeFilter, setActiveFilter] = useState("All");
 
-  const filtered =
-    activeFilter === "All"
-      ? projects
-      : projects.filter((p) => p.category === activeFilter);
 
   // Get all open source featured projects for spotlight
   const ossProjects = projects.filter(
@@ -149,21 +144,7 @@ export default function Projects() {
     return () => ctx.revert();
   }, []);
 
-  useEffect(() => {
-    if (!gridRef.current) return;
-    gsap.fromTo(
-      gridRef.current.querySelectorAll(".project-card"),
-      { opacity: 0, y: 40, scale: 0.96 },
-      {
-        opacity: 1,
-        y: 0,
-        scale: 1,
-        duration: 0.55,
-        stagger: 0.09,
-        ease: "power3.out",
-      },
-    );
-  }, [activeFilter]);
+
 
   return (
     <section
@@ -179,11 +160,11 @@ export default function Projects() {
       <div className="section-container">
         {/* Header */}
         <div ref={headerRef} className="section-header">
-          <p className="reveal-item opacity-0 section-label mb-4">Portfolio</p>
-          <h2 className="reveal-item opacity-0 text-3xl sm:text-4xl md:text-5xl font-black gradient-text-2 mb-5">
+          <p className="reveal-item opacity-0 section-label mb-4 tracking-[0.3em] font-bold">Portfolio</p>
+          <h2 className="reveal-item opacity-0 text-3xl sm:text-5xl md:text-6xl font-black gradient-text-2 mb-6 tracking-tighter leading-tight">
             Featured Projects
           </h2>
-          <p className="reveal-item opacity-0 text-slate-500 text-sm sm:text-base max-w-xl mx-auto leading-relaxed">
+          <p className="reveal-item opacity-0 text-slate-400/80 text-sm sm:text-base md:text-lg max-w-2xl mx-auto leading-relaxed font-light tracking-wide">
             A selection of enterprise solutions, open-source contributions, and
             personal projects I&apos;ve built throughout my career.
           </p>
@@ -357,30 +338,14 @@ export default function Projects() {
           </div>
         )}
 
-        {/* Filter tabs */}
-        <div className="flex justify-center gap-4 mb-16 sm:mb-24 flex-wrap">
-          {categories.map((cat) => (
-            <MagneticButton key={cat} strength={0.2}>
-              <button
-                onClick={() => setActiveFilter(cat)}
-                className={`px-7 py-3 rounded-full text-sm font-semibold transition-all duration-300 cursor-none ${
-                  activeFilter === cat
-                    ? "btn-primary shadow-lg shadow-indigo-500/30"
-                    : "glass-card text-slate-400 hover:text-slate-200 hover:border-indigo-500/40"
-                }`}
-              >
-                {cat}
-              </button>
-            </MagneticButton>
-          ))}
-        </div>
+<br></br>
 
         {/* Grid */}
         <div
           ref={gridRef}
           className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6"
         >
-          {filtered.map((project) => (
+          {projects.map((project) => (
             <div
               key={project.id}
               className="relative"
@@ -439,7 +404,7 @@ export default function Projects() {
 
                       <div className="flex items-center gap-2 shrink-0">
                         {project.github && (
-                          <MagneticButton strength={0.5}>
+                          <MagneticButton strength={0.5} className="-m-5">
                             <a
                               href={project.github}
                               target="_blank"
@@ -451,7 +416,7 @@ export default function Projects() {
                           </MagneticButton>
                         )}
                         {project.link && (
-                          <MagneticButton strength={0.5}>
+                          <MagneticButton strength={0.5} className="-m-5">
                             <a
                               href={project.link}
                               target="_blank"

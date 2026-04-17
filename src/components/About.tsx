@@ -116,7 +116,7 @@ export default function About() {
   }, []);
 
   return (
-    <section id="about" ref={sectionRef} className="py-24 sm:py-32 lg:py-48 xl:py-56 relative overflow-hidden bg-[#050510]">
+    <section id="about" ref={sectionRef} className="py-20 sm:py-24 lg:py-32 xl:py-40 relative overflow-hidden bg-[#050510]">
       {/* Dynamic Background Elements */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-1/4 -left-20 w-[600px] h-[600px] rounded-full bg-indigo-600/5 blur-[120px]" />
@@ -131,7 +131,7 @@ export default function About() {
            <span className="text-xs font-black text-indigo-400 uppercase tracking-[0.4em]">Insight & Strategy</span>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-20 lg:gap-32 xl:gap-40 items-start mb-32 lg:mb-48">
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-24 items-start mb-20 lg:mb-32">
           
           {/* ── Visual Side ── */}
           <div ref={imageRef} className="opacity-0 relative group">
@@ -209,7 +209,7 @@ export default function About() {
             </p>
 
             <p className="reveal-item opacity-0 text-slate-500 text-lg sm:text-xl leading-relaxed mb-14 max-w-2xl">
-              Specializing in the full lifecycle of high-stakes product development. Currently spearheading technical innovations as and building next-gen systems at <span className="text-indigo-400 font-bold">{personalInfo.company}</span>.
+              Specializing in the full lifecycle of high-stakes product development. Currently spearheading technical innovations as and building next-gen systems at <a href="#contact" className="link-glow">{personalInfo.company}</a>.
             </p>
 
             {/* Tech Attribute Bento Box */}
@@ -220,31 +220,19 @@ export default function About() {
                 { label: "Performance", value: "High-Concurrency Optimization" },
                 { label: "Global Status", value: "Remote / On-site Available" }
               ].map((item, i) => (
-                <div key={i} className="group p-5 rounded-2xl bg-white/5 border border-white/5 hover:border-indigo-500/20 hover:bg-white/[0.07] transition-all duration-300">
-                    <p className="text-[10px] text-slate-600 font-black uppercase tracking-widest mb-2 group-hover:text-indigo-400 transition-colors uppercase leading-none">{item.label}</p>
+                <div key={i} className="group gap-4 rounded-2xl bg-white/5 border border-white/5 hover:border-indigo-500/20 hover:bg-white/[0.07] transition-all duration-300">
+                    <div style={{padding:"10px"}}><p className="text-[10px] text-slate-600 font-black uppercase tracking-widest mb-2 group-hover:text-indigo-400 transition-colors uppercase leading-none">{item.label}</p>
                     <p className="text-base text-slate-300 font-bold group-hover:text-white transition-colors">{item.value}</p>
-                </div>
+                </div></div>
               ))}
             </div>
 
-            {/* Action Group */}
-            <div className="reveal-item opacity-0 flex flex-wrap gap-6">
-              <MagneticButton>
-                <a href={`mailto:${personalInfo.email}`} className="px-12 py-6 rounded-2xl btn-primary font-bold text-sm tracking-widest shadow-2xl shadow-indigo-500/20 inline-flex items-center gap-3 uppercase">
-                  Hire My Talent <CheckCircle2 size={20} />
-                </a>
-              </MagneticButton>
-              <MagneticButton>
-                <a href="/resume.pdf" target="_blank" className="px-12 py-6 rounded-2xl btn-outline text-white font-bold text-sm tracking-widest inline-flex items-center gap-3 uppercase">
-                  Download CV <Download size={20} />
-                </a>
-              </MagneticButton>
-            </div>
+
           </div>
         </div>
-
+<br></br>
         {/* ── Performance Pillars ── */}
-        <div ref={cardsRef} className="relative pt-32 lg:pt-48 border-t border-white/5">
+        <div ref={cardsRef} className="relative pt-28 lg:pt-40 ">
            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12">
               {highlights.map((item, i) => (
                 <div key={i} className="highlight-card opacity-0 glass-card p-12 rounded-[3.5rem] border border-white/5 hover:border-indigo-500/20 transition-all duration-700 group">

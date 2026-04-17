@@ -14,9 +14,9 @@
   --glow-primary: rgba(99, 102, 241, 0.4);
   --glow-secondary: rgba(168, 85, 247, 0.4);
 
-  /* Standardized spacing scale - Increased for a more airy, modern feel */
-  --section-gap: clamp(7rem, 12vw, 12rem);
-  --container-px: clamp(1.5rem, 6vw, 4rem);
+  /* Standardized spacing scale - Refined for better density */
+  --section-gap: clamp(5rem, 10vw, 8rem);
+  --container-px: clamp(1rem, 5vw, 3rem);
   --container-max: 85rem;
 }
 
@@ -35,6 +35,7 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 body {
@@ -78,10 +79,10 @@ body {
   }
 }
 
-/* Section header spacing - Increased */
+/* Section header spacing - Reduced for efficiency */
 .section-header {
   text-align: center;
-  margin-bottom: clamp(4.5rem, 8vw, 7rem);
+  margin-bottom: clamp(3rem, 6vw, 4.5rem);
 }
 
 /* ======================================================
@@ -161,25 +162,27 @@ h1,
 h2,
 h3,
 h4 {
-  letter-spacing: -0.02em;
-  line-height: 1.05;
-  font-weight: 800;
+  letter-spacing: -0.03em; /* Tighter for modern look */
+  line-height: 1.1;
+  font-weight: 900;
 }
 
 h1 {
-  font-size: clamp(2.25rem, 10vw, 6rem);
+  font-size: clamp(2.5rem, 10vw, 6.5rem);
 }
 h2 {
-  font-size: clamp(1.85rem, 7vw, 4rem);
+  font-size: clamp(2rem, 8vw, 4.5rem);
 }
 h3 {
-  font-size: clamp(1.4rem, 5vw, 2.5rem);
+  font-size: clamp(1.5rem, 5vw, 2.75rem);
 }
 
 p {
-  line-height: 1.6;
-  font-size: clamp(0.95rem, 2vw, 1.125rem);
+  line-height: 1.75;
+  font-size: clamp(0.95rem, 2vw, 1.15rem);
+  letter-spacing: 0.015em;
   color: var(--text-secondary);
+  font-weight: 400;
 }
 
 /* ======================================================
@@ -477,8 +480,8 @@ p {
   overflow: hidden;
   background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 55%, #a855f7 100%);
   color: #fff;
-  font-weight: 600;
-  letter-spacing: 0.025em;
+  font-weight: 700;
+  letter-spacing: 0.05em;
   border: none;
   transition:
     transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1),
@@ -532,8 +535,8 @@ p {
   border: 1px solid rgba(99, 102, 241, 0.45);
   color: var(--text-primary);
   background: transparent;
-  font-weight: 600;
-  letter-spacing: 0.02em;
+  font-weight: 700;
+  letter-spacing: 0.05em;
   transition:
     color 0.3s ease,
     border-color 0.3s ease,
@@ -625,25 +628,59 @@ p {
 .link-fancy {
   position: relative;
   color: var(--text-secondary);
-  transition: color 0.25s;
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  text-decoration: none;
+}
+
+.link-fancy:hover {
+  color: var(--text-primary);
+  transform: translateY(-1px);
 }
 
 .link-fancy::after {
   content: "";
   position: absolute;
-  bottom: -2px;
-  left: 0;
   width: 0;
-  height: 1.5px;
-  background: linear-gradient(90deg, #6366f1, #a855f7);
-  border-radius: 1px;
-  transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  height: 1px;
+  bottom: -4px;
+  left: 50%;
+  background: linear-gradient(90deg, transparent, #6366f1, #a855f7, transparent);
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  transform: translateX(-50%);
+  opacity: 0;
 }
 
-.link-fancy:hover {
-  color: #c4b5fd;
-}
 .link-fancy:hover::after {
+  width: 100%;
+  opacity: 1;
+}
+
+/* More prominent glow link */
+.link-glow {
+  color: #818cf8;
+  position: relative;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.link-glow:hover {
+  color: #c084fc;
+  text-shadow: 0 0 15px rgba(168, 85, 247, 0.4);
+}
+
+.link-glow::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background: linear-gradient(90deg, #6366f1, #a855f7);
+  transition: width 0.3s ease;
+  border-radius: 4px;
+}
+
+.link-glow:hover::after {
   width: 100%;
 }
 

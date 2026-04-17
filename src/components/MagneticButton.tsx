@@ -46,7 +46,7 @@ export default function MagneticButton({
   }, [strength]);
 
   return (
-    <div ref={wrapRef} className={`inline-block will-change-transform ${className}`}>
+    <div ref={wrapRef} className={`inline-block will-change-transform p-5 ${className}`}>
       <div ref={innerRef}>{children}</div>
     </div>
   );

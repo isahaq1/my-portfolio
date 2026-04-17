@@ -134,7 +134,7 @@ export default function Hero() {
       </div>
 
       {/* ─── Main content — 2-column on large screens ─── */}
-      <div className="relative z-10 w-full section-container pt-32 pb-40 lg:pt-48 lg:pb-60">
+      <div className="relative z-10 w-full section-container pt-24 pb-28 lg:pt-36 lg:pb-40">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-24 items-center">
 
           {/* ── Left column — text content ── */}
@@ -158,18 +158,18 @@ export default function Hero() {
             {/* Name */}
             <h1
               ref={nameRef}
-              className="opacity-0 font-black mb-6 lg:mb-8"
+              className="opacity-0 font-black mb-6 lg:mb-8 tracking-tighter leading-[1.05]"
             >
-              <span className="block text-slate-200">Hi, I&apos;m</span>
-              <span className="block gradient-text" style={{ textShadow: "0 0 60px rgba(99,102,241,0.2)" }}>
+              <span className="block text-slate-100/90 text-2xl sm:text-3xl md:text-5xl lg:text-6xl mb-2 sm:mb-4 tracking-tight">Hi, I&apos;m</span>
+              <span className="block gradient-text drop-shadow-[0_0_30px_rgba(99,102,241,0.2)]">
                 {personalInfo.name}
               </span>
             </h1>
 
             {/* Typewriter */}
-            <div ref={typeRef} className="opacity-0 mb-6 lg:mb-8">
-              <div className="flex items-center justify-center lg:justify-start gap-3 sm:gap-4 text-lg sm:text-2xl md:text-3xl font-light text-slate-400">
-                <span className="w-6 sm:w-8 h-[2px] bg-indigo-500/60 inline-block" />
+            <div ref={typeRef} className="opacity-0 mb-6 lg:mb-10">
+              <div className="flex items-center justify-center lg:justify-start gap-4 sm:gap-6 text-lg sm:text-xl md:text-2xl font-light text-slate-400">
+                <span className="w-8 sm:w-12 h-[2px] bg-indigo-500/60 inline-block rounded-full" />
                 <TypeAnimation
                   sequence={[
                     "Senior Full Stack Developer", 2200,
@@ -179,13 +179,13 @@ export default function Hero() {
                   wrapper="span"
                   speed={52}
                   repeat={Infinity}
-                  className="text-indigo-400 font-semibold"
+                  className="text-indigo-400 font-semibold tracking-wide"
                 />
               </div>
             </div>
 
             {/* Bio */}
-            <p ref={descRef} className="opacity-0 text-slate-400 text-base sm:text-xl leading-relaxed mb-10 max-w-2xl mx-auto lg:mx-0">
+            <p ref={descRef} className="opacity-0 text-slate-400/90 text-base sm:text-lg lg:text-xl leading-[1.8] font-light tracking-wide mb-12 max-w-2xl mx-auto lg:mx-0">
               {personalInfo.shortBio}
             </p>
 
@@ -203,39 +203,16 @@ export default function Hero() {
             </div>
 
             {/* CTA buttons */}
-            <div ref={ctaRef} className="flex flex-wrap items-center justify-center lg:justify-start gap-4 sm:gap-6 mb-16 sm:mb-24">
-              <MagneticButton className="cta-item opacity-0">
+            <div ref={ctaRef} className="flex flex-wrap  items-center justify-center lg:justify-start gap-4 sm:gap-6 mb-16 sm:mb-24">
+              <MagneticButton className="cta-item opacity-0 -m-5">
                 <a
                   href="#projects"
                   onClick={(e) => { e.preventDefault(); document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" }); }}
-                  className="px-6 sm:px-8 py-3.5 sm:py-4 rounded-full btn-primary font-bold cursor-none text-sm sm:text-base"
+                  className="px-7 sm:px-9 py-3.5 sm:py-4 rounded-full btn-primary font-bold cursor-none text-sm sm:text-base inline-flex items-center"
                 >
-                  View My Work <span className="text-base sm:text-lg">→</span>
+                  View My Work <span className="text-base sm:text-lg ml-1">→</span>
                 </a>
               </MagneticButton>
-
-              <div className="flex items-center gap-3 sm:gap-4">
-                <MagneticButton className="cta-item opacity-0">
-                  <a
-                    href="/resume.pdf"
-                    target="_blank"
-                    className="px-6 sm:px-8 py-3.5 sm:py-4 rounded-full btn-outline font-bold cursor-none text-sm sm:text-base inline-flex items-center gap-2"
-                  >
-                    <span>Download CV</span>
-                    <ArrowDown size={18} />
-                  </a>
-                </MagneticButton>
-
-                <MagneticButton className="cta-item opacity-0">
-                  <a
-                    href={`mailto:${personalInfo.email}`}
-                    className="w-11 h-11 sm:w-14 sm:h-14 rounded-full btn-icon cursor-none"
-                    aria-label="Email Me"
-                  >
-                    <Mail size={18} className="sm:size-20" />
-                  </a>
-                </MagneticButton>
-              </div>
             </div>
 
             {/* Animated stats */}
@@ -282,17 +259,7 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Scroll indicator */}
-      <div
-        ref={scrollRef}
-        className="opacity-0 absolute bottom-4 sm:bottom-5 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 cursor-none"
-        onClick={() => document.getElementById("about")?.scrollIntoView({ behavior: "smooth" })}
-      >
-        <span className="text-[9px] text-slate-700 tracking-[0.2em] uppercase">Scroll</span>
-        <div className="scroll-indicator w-5 h-5 rounded-full border border-slate-800 flex items-center justify-center">
-          <ArrowDown size={9} className="text-slate-700" />
-        </div>
-      </div>
+
     </section>
   );
 }

@@ -87,11 +87,11 @@ export default function Contact() {
       <div className="section-container">
         {/* Header */}
         <div ref={headerRef} className="section-header mb-24 lg:mb-32">
-          <p className="reveal-item opacity-0 section-label mb-6">Get in touch</p>
-          <h2 className="reveal-item opacity-0 text-3xl sm:text-4xl md:text-5xl font-bold gradient-text-2 mb-8">
+          <p className="reveal-item opacity-0 section-label mb-5 tracking-[0.3em] font-bold">Get in touch</p>
+          <h2 className="reveal-item opacity-0 text-3xl sm:text-5xl md:text-6xl font-black gradient-text-2 mb-6 tracking-tighter leading-tight">
             Let&apos;s Work Together
           </h2>
-          <p className="reveal-item opacity-0 text-slate-500 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
+          <p className="reveal-item opacity-0 text-slate-400/80 text-sm sm:text-base md:text-lg max-w-2xl mx-auto leading-relaxed font-light tracking-wide">
             Have a project in mind or an opportunity to discuss? I&apos;m always open to new challenges.
             Let&apos;s build something great together.
           </p>
@@ -109,11 +109,11 @@ export default function Contact() {
               <p className="text-slate-400 text-xs sm:text-sm leading-relaxed mb-6">
                 Whether it&apos;s a freelance project, full-time role, or just a quick consultation — feel free to reach out!
               </p>
-              <MagneticButton>
+              <MagneticButton className="-m-5">
                 <a href={`mailto:${personalInfo.email}`}
-                  className="inline-flex items-center gap-2 px-5 py-3 rounded-full btn-primary text-sm font-semibold cursor-none">
+                  className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-full btn-primary text-sm font-semibold cursor-none hover:scale-105 transition-transform">
                   <span>Send Email</span>
-                  <Mail size={13} />
+                  <Mail size={14} />
                 </a>
               </MagneticButton>
             </div>
@@ -211,7 +211,7 @@ export default function Contact() {
                   </div>
 
                   <button type="submit" disabled={status === "sending"}
-                    className="w-full py-3.5 rounded-xl btn-primary font-semibold cursor-none inline-flex items-center justify-center gap-2 disabled:opacity-60 text-sm sm:text-base">
+                    className="w-full py-4.5 rounded-xl btn-primary font-semibold cursor-none inline-flex items-center justify-center gap-2 disabled:opacity-60 text-sm sm:text-base hover:-translate-y-1 transition-transform mb-2">
                     {status === "sending" ? (
                       <>
                         <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />

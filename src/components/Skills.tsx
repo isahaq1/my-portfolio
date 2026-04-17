@@ -62,19 +62,19 @@ export default function Skills() {
 
       <div className="section-container">
         {/* Header */}
-        <div ref={headerRef} className="text-center mb-24 lg:mb-32">
-          <p className="reveal-item opacity-0 section-label mb-6">What I work with</p>
-          <h2 className="reveal-item opacity-0 text-3xl sm:text-4xl md:text-5xl font-bold gradient-text-2 mb-8">
+        <div ref={headerRef} className="text-center mb-16 lg:mb-24">
+          <p className="reveal-item opacity-0 section-label mb-5 tracking-[0.3em] font-bold">What I work with</p>
+          <h2 className="reveal-item opacity-0 text-3xl sm:text-5xl md:text-6xl font-black gradient-text-2 mb-6 tracking-tighter leading-tight">
             Skills &amp; Technologies
-            </h2>
-          <p className="reveal-item opacity-0 text-slate-500 text-sm sm:text-base max-w-xl mx-auto leading-relaxed">
+          </h2>
+          <p className="reveal-item opacity-0 text-slate-400/80 text-sm sm:text-base md:text-lg max-w-2xl mx-auto leading-relaxed font-light tracking-wide">
             A comprehensive toolkit built over 5+ years of professional development across multiple
             domains and industries.
-            </p>
-          </div>
+          </p>
+        </div>
           
         {/* Solar system orbit animation */}
-        <div ref={solarRef} className="opacity-0 mb-20 sm:mb-32 lg:mb-40 scale-75 sm:scale-100 origin-center transition-transform">
+        <div ref={solarRef} className="opacity-0 mb-16 sm:mb-24 lg:mb-32 scale-75 sm:scale-100 origin-center transition-transform">
               <SkillsSolarSystem />
             </div>
 
