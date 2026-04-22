@@ -6,8 +6,6 @@ import { GithubIcon, LinkedinIcon } from "./Icons";
 import MagneticButton from "./MagneticButton";
 
 export default function Footer() {
-
-
   return (
     <footer className="relative border-t border-indigo-500/10 py-16 sm:py-20 lg:py-24 overflow-hidden">
       {/* Top accent line */}
@@ -15,29 +13,40 @@ export default function Footer() {
 
       <div className="section-container">
         <div className="flex flex-col sm:flex-row items-center justify-between gap-8">
-
           {/* Logo & tagline */}
           <div className="text-center sm:text-left">
             <div className="flex items-center gap-2.5 justify-center sm:justify-start mb-2 group">
               <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg border-animated p-[1px] shrink-0 transition-transform group-hover:scale-105">
                 <div className="w-full h-full bg-[#050510] rounded-[5px] flex items-center justify-center">
-                  <span className="text-[10px] font-black gradient-text">IS</span>
+                  <span className="text-[10px] font-black gradient-text">
+                    IS
+                  </span>
                 </div>
               </div>
-              <span className="font-bold text-sm text-slate-300 group-hover:gradient-text transition-all">{personalInfo.name}</span>
+              <span className="font-bold text-sm text-slate-300 group-hover:gradient-text transition-all">
+                {personalInfo.name}
+              </span>
             </div>
-            <p className="text-xs text-slate-600">Senior Developer @ {personalInfo.company} · {personalInfo.location}</p>
+            <p className="text-xs text-slate-600">
+              Senior Full Stack Developer @ {personalInfo.company} ·{" "}
+              {personalInfo.location}
+            </p>
           </div>
 
           {/* Nav links */}
           <div className="flex flex-wrap justify-center gap-5 sm:gap-7">
             {navLinks.map((link) => (
-              <a key={link.href} href={link.href}
+              <a
+                key={link.href}
+                href={link.href}
                 onClick={(e) => {
                   e.preventDefault();
-                  document.getElementById(link.href.replace("#", ""))?.scrollIntoView({ behavior: "smooth" });
+                  document
+                    .getElementById(link.href.replace("#", ""))
+                    ?.scrollIntoView({ behavior: "smooth" });
                 }}
-                className="px-2 py-1 text-xs transition-colors cursor-none link-fancy">
+                className="px-2 py-1 text-xs transition-colors cursor-none link-fancy"
+              >
                 {link.label}
               </a>
             ))}
@@ -46,16 +55,32 @@ export default function Footer() {
           {/* Social icons + scroll-top */}
           <div className="flex items-center gap-3.5">
             {[
-              { href: personalInfo.github,   icon: <GithubIcon size={15} />,   label: "GitHub"   },
-              { href: personalInfo.linkedin, icon: <LinkedinIcon size={15} />, label: "LinkedIn" },
-              { href: `mailto:${personalInfo.email}`, icon: <Mail size={15} />, label: "Email" },
+              {
+                href: personalInfo.github,
+                icon: <GithubIcon size={15} />,
+                label: "GitHub",
+              },
+              {
+                href: personalInfo.linkedin,
+                icon: <LinkedinIcon size={15} />,
+                label: "LinkedIn",
+              },
+              {
+                href: `mailto:${personalInfo.email}`,
+                icon: <Mail size={15} />,
+                label: "Email",
+              },
             ].map(({ href, icon, label }) => (
               <MagneticButton key={label} strength={0.55}>
-                <a href={href}
+                <a
+                  href={href}
                   target={href.startsWith("http") ? "_blank" : undefined}
-                  rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
+                  rel={
+                    href.startsWith("http") ? "noopener noreferrer" : undefined
+                  }
                   aria-label={label}
-                  className="w-9 h-9 rounded-full btn-icon cursor-none">
+                  className="w-9 h-9 rounded-full btn-icon cursor-none"
+                >
                   {icon}
                 </a>
               </MagneticButton>
