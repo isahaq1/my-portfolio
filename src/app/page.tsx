@@ -8,6 +8,7 @@ import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import CustomCursor from "@/components/CustomCursor";
 import SmoothScroll from "@/components/SmoothScroll";
+import ScrollToTop from "@/components/ScrollToTop";
 
 function SectionDivider() {
   return <div className="section-divider my-8 sm:my-16 lg:my-24" />;
@@ -32,6 +33,7 @@ export default function Home() {
         <Contact />
       </main>
       <Footer />
+      <ScrollToTop />
     </SmoothScroll>
   );
 }
