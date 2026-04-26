@@ -19,7 +19,7 @@ export default function Footer() {
               <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg border-animated p-[1px] shrink-0 transition-transform group-hover:scale-105">
                 <div className="w-full h-full bg-[#050510] rounded-[5px] flex items-center justify-center">
                   <span className="text-[10px] font-black gradient-text">
-                    HIN
+                    H@
                   </span>
                 </div>
               </div>
