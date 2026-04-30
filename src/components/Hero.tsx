@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { TypeAnimation } from "react-type-animation";
 import { personalInfo, stats, techStack } from "@/lib/data";
-import { Mail, ArrowDown, MapPin, Briefcase } from "lucide-react";
+import { Mail, MapPin, Briefcase } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "./Icons";
 import MagneticButton from "./MagneticButton";
 import AnimatedCounter from "./AnimatedCounter";
@@ -12,20 +12,25 @@ import ParticleCanvas from "./ParticleCanvas";
 import OrbitSystem from "./OrbitSystem";
 
 interface Star {
-  id: number; width: number; height: number;
-  top: number; left: number; opacity: number;
-  duration: number; delay: number;
+  id: number;
+  width: number;
+  height: number;
+  top: number;
+  left: number;
+  opacity: number;
+  duration: number;
+  delay: number;
 }
 
 export default function Hero() {
-  const greetRef  = useRef<HTMLDivElement>(null);
-  const nameRef   = useRef<HTMLHeadingElement>(null);
-  const typeRef   = useRef<HTMLDivElement>(null);
-  const descRef   = useRef<HTMLParagraphElement>(null);
-  const ctaRef    = useRef<HTMLDivElement>(null);
-  const statsRef  = useRef<HTMLDivElement>(null);
+  const greetRef = useRef<HTMLDivElement>(null);
+  const nameRef = useRef<HTMLHeadingElement>(null);
+  const typeRef = useRef<HTMLDivElement>(null);
+  const descRef = useRef<HTMLParagraphElement>(null);
+  const ctaRef = useRef<HTMLDivElement>(null);
+  const statsRef = useRef<HTMLDivElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
-  const lineRef   = useRef<HTMLDivElement>(null);
+  const lineRef = useRef<HTMLDivElement>(null);
 
   const [stars, setStars] = useState<Star[]>([]);
 
@@ -34,14 +39,14 @@ export default function Hero() {
     setStars(
       Array.from({ length: 50 }, (_, id) => ({
         id,
-        width:    Math.random() * 2 + 0.8,
-        height:   Math.random() * 2 + 0.8,
-        top:      Math.random() * 100,
-        left:     Math.random() * 100,
-        opacity:  Math.random() * 0.4 + 0.08,
+        width: Math.random() * 2 + 0.8,
+        height: Math.random() * 2 + 0.8,
+        top: Math.random() * 100,
+        left: Math.random() * 100,
+        opacity: Math.random() * 0.4 + 0.08,
         duration: Math.random() * 3 + 2,
-        delay:    Math.random() * 4,
-      }))
+        delay: Math.random() * 4,
+      })),
     );
   }, []);
 
@@ -50,53 +55,96 @@ export default function Hero() {
     const tl = gsap.timeline({ delay: 0.15 });
 
     // Decorative line
-    tl.fromTo(lineRef.current,
+    tl.fromTo(
+      lineRef.current,
       { scaleX: 0, opacity: 0 },
-      { scaleX: 1, opacity: 1, duration: 0.8, ease: "power3.inOut" }
+      { scaleX: 1, opacity: 1, duration: 0.8, ease: "power3.inOut" },
     )
-    .fromTo(greetRef.current,
-      { opacity: 0, y: 28, filter: "blur(6px)" },
-      { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.7, ease: "power3.out" },
-      "-=0.4"
-    )
-    .fromTo(nameRef.current,
-      { opacity: 0, y: 55, skewY: 4 },
-      { opacity: 1, y: 0, skewY: 0, duration: 1.0, ease: "power4.out" },
-      "-=0.4"
-    )
-    .fromTo(typeRef.current,
-      { opacity: 0, y: 22 },
-      { opacity: 1, y: 0, duration: 0.65, ease: "power3.out" },
-      "-=0.4"
-    )
-    .fromTo(descRef.current,
-      { opacity: 0, y: 20 },
-      { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" },
-      "-=0.3"
-    )
-    .fromTo(ctaRef.current?.querySelectorAll(".cta-item") ?? [],
-      { opacity: 0, y: 24, scale: 0.94 },
-      { opacity: 1, y: 0, scale: 1, duration: 0.55, stagger: 0.1, ease: "back.out(1.5)" },
-      "-=0.3"
-    )
-    .fromTo(statsRef.current?.querySelectorAll(".stat-item") ?? [],
-      { opacity: 0, y: 30, scale: 0.88 },
-      { opacity: 1, y: 0, scale: 1, duration: 0.5, stagger: 0.09, ease: "back.out(2)" },
-      "-=0.2"
-    )
-    .fromTo(scrollRef.current,
-      { opacity: 0 },
-      { opacity: 1, duration: 0.5 },
-      "-=0.1"
-    );
+      .fromTo(
+        greetRef.current,
+        { opacity: 0, y: 28, filter: "blur(6px)" },
+        {
+          opacity: 1,
+          y: 0,
+          filter: "blur(0px)",
+          duration: 0.7,
+          ease: "power3.out",
+        },
+        "-=0.4",
+      )
+      .fromTo(
+        nameRef.current,
+        { opacity: 0, y: 55, skewY: 4 },
+        { opacity: 1, y: 0, skewY: 0, duration: 1.0, ease: "power4.out" },
+        "-=0.4",
+      )
+      .fromTo(
+        typeRef.current,
+        { opacity: 0, y: 22 },
+        { opacity: 1, y: 0, duration: 0.65, ease: "power3.out" },
+        "-=0.4",
+      )
+      .fromTo(
+        descRef.current,
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" },
+        "-=0.3",
+      )
+      .fromTo(
+        ctaRef.current?.querySelectorAll(".cta-item") ?? [],
+        { opacity: 0, y: 24, scale: 0.94 },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.55,
+          stagger: 0.1,
+          ease: "back.out(1.5)",
+        },
+        "-=0.3",
+      )
+      .fromTo(
+        statsRef.current?.querySelectorAll(".stat-item") ?? [],
+        { opacity: 0, y: 30, scale: 0.88 },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.5,
+          stagger: 0.09,
+          ease: "back.out(2)",
+        },
+        "-=0.2",
+      )
+      .fromTo(
+        scrollRef.current,
+        { opacity: 0 },
+        { opacity: 1, duration: 0.5 },
+        "-=0.1",
+      );
 
     // Mouse parallax
     const onMove = (e: MouseEvent) => {
-      const mx = (e.clientX - window.innerWidth  / 2) / window.innerWidth;
+      const mx = (e.clientX - window.innerWidth / 2) / window.innerWidth;
       const my = (e.clientY - window.innerHeight / 2) / window.innerHeight;
-      gsap.to(".hero-blob-1", { x: mx * 30,  y: my * 30,  duration: 1.2, ease: "power2.out" });
-      gsap.to(".hero-blob-2", { x: mx * -22, y: my * -22, duration: 1.4, ease: "power2.out" });
-      gsap.to(".hero-blob-3", { x: mx * 14,  y: my * 14,  duration: 1.7, ease: "power2.out" });
+      gsap.to(".hero-blob-1", {
+        x: mx * 30,
+        y: my * 30,
+        duration: 1.2,
+        ease: "power2.out",
+      });
+      gsap.to(".hero-blob-2", {
+        x: mx * -22,
+        y: my * -22,
+        duration: 1.4,
+        ease: "power2.out",
+      });
+      gsap.to(".hero-blob-3", {
+        x: mx * 14,
+        y: my * 14,
+        duration: 1.7,
+        ease: "power2.out",
+      });
     };
     window.addEventListener("mousemove", onMove);
     return () => window.removeEventListener("mousemove", onMove);
@@ -120,14 +168,16 @@ export default function Hero() {
       {/* Static star layer */}
       <div className="absolute inset-0 pointer-events-none" aria-hidden>
         {stars.map((s) => (
-          <div key={s.id} className="absolute rounded-full bg-white"
+          <div
+            key={s.id}
+            className="absolute rounded-full bg-white"
             style={{
-              width:    s.width  + "px",
-              height:   s.height + "px",
-              top:      s.top    + "%",
-              left:     s.left   + "%",
-              opacity:  s.opacity,
-              animation:`twinkle ${s.duration}s ease-in-out ${s.delay}s infinite`,
+              width: s.width + "px",
+              height: s.height + "px",
+              top: s.top + "%",
+              left: s.left + "%",
+              opacity: s.opacity,
+              animation: `twinkle ${s.duration}s ease-in-out ${s.delay}s infinite`,
             }}
           />
         ))}
@@ -136,11 +186,13 @@ export default function Hero() {
       {/* ─── Main content — 2-column on large screens ─── */}
       <div className="relative z-10 w-full section-container pt-24 pb-28 lg:pt-36 lg:pb-40">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-24 items-center">
-
           {/* ── Left column — text content ── */}
           <div className="text-center lg:text-left">
             {/* Decorative top line */}
-            <div ref={lineRef} className="opacity-0 origin-left w-20 h-[2.5px] bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full mb-8 lg:mb-12 mx-auto lg:ml-0" />
+            <div
+              ref={lineRef}
+              className="opacity-0 origin-left w-20 h-[2.5px] bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full mb-8 lg:mb-12 mx-auto lg:ml-0"
+            />
 
             {/* Available badge */}
             <div ref={greetRef} className="opacity-0 mb-8 lg:mb-10">
@@ -150,7 +202,9 @@ export default function Hero() {
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
                     <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500" />
                   </span>
-                  <span className="text-xs sm:text-base text-slate-300 font-medium">Available for opportunities</span>
+                  <span className="text-xs sm:text-base text-slate-300 font-medium">
+                    Available for opportunities
+                  </span>
                 </div>
               </MagneticButton>
             </div>
@@ -160,7 +214,9 @@ export default function Hero() {
               ref={nameRef}
               className="opacity-0 font-black mb-6 lg:mb-8 tracking-tighter leading-[1.05]"
             >
-              <span className="block text-slate-100/90 text-2xl sm:text-3xl md:text-5xl lg:text-6xl mb-2 sm:mb-4 tracking-tight">Hi, I&apos;m</span>
+              <span className="block text-slate-100/90 text-2xl sm:text-3xl md:text-5xl lg:text-6xl mb-2 sm:mb-4 tracking-tight">
+                Hi, I&apos;m
+              </span>
               <span className="block gradient-text drop-shadow-[0_0_30px_rgba(99,102,241,0.2)]">
                 {personalInfo.name}
               </span>
@@ -172,9 +228,12 @@ export default function Hero() {
                 <span className="w-8 sm:w-12 h-[2px] bg-indigo-500/60 inline-block rounded-full" />
                 <TypeAnimation
                   sequence={[
-                    "Senior Full Stack Developer", 2200,
-                    "Backend Architecture Expert", 2200,
-                    "Enterprise Solutions Builder", 2200,
+                    "Senior Full Stack Developer",
+                    2200,
+                    "Backend Architecture Expert",
+                    2200,
+                    "Enterprise Solutions Builder",
+                    2200,
                   ]}
                   wrapper="span"
                   speed={52}
@@ -185,7 +244,10 @@ export default function Hero() {
             </div>
 
             {/* Bio */}
-            <p ref={descRef} className="opacity-0 text-slate-400/90 text-base sm:text-lg lg:text-xl leading-[1.8] font-light tracking-wide mb-12 max-w-2xl mx-auto lg:mx-0">
+            <p
+              ref={descRef}
+              className="opacity-0 text-slate-400/90 text-base sm:text-lg lg:text-xl leading-[1.8] font-light tracking-wide mb-12 max-w-2xl mx-auto lg:mx-0"
+            >
               {personalInfo.shortBio}
             </p>
 
@@ -203,20 +265,32 @@ export default function Hero() {
             </div>
 
             {/* CTA buttons */}
-            <div ref={ctaRef} className="flex flex-wrap  items-center justify-center lg:justify-start gap-4 sm:gap-6 mb-16 sm:mb-24">
+            <div
+              ref={ctaRef}
+              className="flex flex-wrap  items-center justify-center lg:justify-start gap-4 sm:gap-6 mb-16 sm:mb-24"
+            >
               <MagneticButton className="cta-item opacity-0 -m-5">
                 <a
                   href="#projects"
-                  onClick={(e) => { e.preventDefault(); document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" }); }}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    document
+                      .getElementById("projects")
+                      ?.scrollIntoView({ behavior: "smooth" });
+                  }}
                   className="px-7 sm:px-9 py-3.5 sm:py-4 rounded-full btn-primary font-bold cursor-none text-sm sm:text-base inline-flex items-center"
                 >
-                  View My Work <span className="text-base sm:text-lg ml-1">→</span>
+                  View My Work{" "}
+                  <span className="text-base sm:text-lg ml-1">→</span>
                 </a>
               </MagneticButton>
             </div>
 
             {/* Animated stats */}
-            <div ref={statsRef} className="grid grid-cols-2 lg:flex justify-center lg:justify-start gap-8 sm:gap-16">
+            <div
+              ref={statsRef}
+              className="grid grid-cols-2 lg:flex justify-center lg:justify-start gap-8 sm:gap-16"
+            >
               {stats.map((stat) => (
                 <div key={stat.label} className="stat-item opacity-0 group">
                   <div className="text-2xl sm:text-3xl font-black gradient-text">
@@ -243,23 +317,35 @@ export default function Hero() {
           {/* Row 1 → */}
           <div className="ticker-track flex gap-12 whitespace-nowrap w-max">
             {[...techStack, ...techStack].map((tech, i) => (
-              <span key={i} className="text-xs sm:text-sm text-slate-500 font-mono flex items-center gap-3">
-                <span className="text-indigo-500/40">◆</span>{tech}
+              <span
+                key={i}
+                className="text-xs sm:text-sm text-slate-500 font-mono flex items-center gap-3"
+              >
+                <span className="text-indigo-500/40">◆</span>
+                {tech}
               </span>
             ))}
           </div>
           {/* Row 2 ← */}
-          <div className="flex gap-12 whitespace-nowrap w-max" style={{ animation: "ticker 32s linear infinite reverse" }}>
-            {[...techStack.slice().reverse(), ...techStack.slice().reverse()].map((tech, i) => (
-              <span key={i} className="text-xs sm:text-sm text-slate-500/60 font-mono flex items-center gap-3">
-                <span className="text-purple-500/30">◆</span>{tech}
+          <div
+            className="flex gap-12 whitespace-nowrap w-max"
+            style={{ animation: "ticker 32s linear infinite reverse" }}
+          >
+            {[
+              ...techStack.slice().reverse(),
+              ...techStack.slice().reverse(),
+            ].map((tech, i) => (
+              <span
+                key={i}
+                className="text-xs sm:text-sm text-slate-500/60 font-mono flex items-center gap-3"
+              >
+                <span className="text-purple-500/30">◆</span>
+                {tech}
               </span>
             ))}
           </div>
         </div>
       </div>
-
-
     </section>
   );
 }

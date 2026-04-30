@@ -19,33 +19,67 @@ export default function Skills() {
       gsap.fromTo(
         headerRef.current?.querySelectorAll(".reveal-item") ?? [],
         { opacity: 0, y: 35 },
-        { opacity: 1, y: 0, duration: 0.7, stagger: 0.1, ease: "power3.out",
-          scrollTrigger: { trigger: headerRef.current, start: "top 80%", once: true } }
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.7,
+          stagger: 0.1,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: headerRef.current,
+            start: "top 80%",
+            once: true,
+          },
+        },
       );
 
       gsap.fromTo(
         solarRef.current,
         { opacity: 0, scale: 0.85 },
-        { opacity: 1, scale: 1, duration: 1.2, ease: "power3.out",
-          scrollTrigger: { trigger: solarRef.current, start: "top 80%", once: true } }
+        {
+          opacity: 1,
+          scale: 1,
+          duration: 1.2,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: solarRef.current,
+            start: "top 80%",
+            once: true,
+          },
+        },
       );
 
       gsap.fromTo(
         gridRef.current?.querySelectorAll(".skill-card") ?? [],
         { opacity: 0, y: 50, scale: 0.96 },
-        { opacity: 1, y: 0, scale: 1, duration: 0.7, stagger: 0.13, ease: "power3.out",
-          scrollTrigger: { trigger: gridRef.current, start: "top 75%", once: true } }
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.7,
+          stagger: 0.13,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: gridRef.current,
+            start: "top 75%",
+            once: true,
+          },
+        },
       );
 
       const bars = gridRef.current?.querySelectorAll(".skill-bar-fill") ?? [];
       bars.forEach((bar) => {
         const target = (bar as HTMLElement).dataset.level ?? "0";
-        gsap.fromTo(bar, { scaleX: 0 }, {
-          scaleX: parseFloat(target) / 100,
-          duration: 1.2,
-          ease: "power3.out",
-          scrollTrigger: { trigger: bar, start: "top 90%", once: true },
-        });
+        gsap.fromTo(
+          bar,
+          { scaleX: 0 },
+          {
+            scaleX: parseFloat(target) / 100,
+            duration: 1.2,
+            ease: "power3.out",
+            scrollTrigger: { trigger: bar, start: "top 90%", once: true },
+          },
+        );
       });
     }, sectionRef);
 
@@ -53,7 +87,11 @@ export default function Skills() {
   }, []);
 
   return (
-    <section id="skills" ref={sectionRef} className="section-spacing relative overflow-hidden">
+    <section
+      id="skills"
+      ref={sectionRef}
+      className="section-spacing relative overflow-hidden"
+    >
       {/* Background glows */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-1/4 -left-16 w-[300px] h-[300px] rounded-full bg-indigo-500/5 blur-[90px]" />
@@ -63,45 +101,80 @@ export default function Skills() {
       <div className="section-container">
         {/* Header */}
         <div ref={headerRef} className="text-center mb-16 lg:mb-24">
-          <p className="reveal-item opacity-0 section-label mb-5 tracking-[0.3em] font-bold">What I work with</p>
+          <p className="reveal-item opacity-0 section-label mb-5 tracking-[0.3em] font-bold">
+            What I work with
+          </p>
           <h2 className="reveal-item opacity-0 text-3xl sm:text-5xl md:text-6xl font-black gradient-text-2 mb-6 tracking-tighter leading-tight">
             Skills &amp; Technologies
           </h2>
           <p className="reveal-item opacity-0 text-slate-400/80 text-sm sm:text-base md:text-lg max-w-2xl mx-auto leading-relaxed font-light tracking-wide">
-            A comprehensive toolkit built over 5+ years of professional development across multiple
-            domains and industries.
+            A comprehensive toolkit built over 5+ years of professional
+            development across multiple domains and industries.
           </p>
         </div>
-          
+
         {/* Solar system orbit animation */}
-        <div ref={solarRef} className="opacity-0 mb-16 sm:mb-24 lg:mb-32 scale-75 sm:scale-100 origin-center transition-transform">
-              <SkillsSolarSystem />
-            </div>
+        <div
+          ref={solarRef}
+          className="opacity-0 mb-16 sm:mb-24 lg:mb-32 scale-75 sm:scale-100 origin-center transition-transform"
+        >
+          <SkillsSolarSystem />
+        </div>
 
         {/* Skill categories grid */}
-        <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+        <div
+          ref={gridRef}
+          className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6"
+        >
           {skills.map((category, ci) => (
-            <div key={ci} className="skill-card opacity-0 glass-card rounded-2xl p-6 lg:p-8 hover:border-indigo-500/30 transition-colors">
+            <div
+              key={ci}
+              className="skill-card opacity-0 glass-card rounded-2xl p-6 lg:p-8 hover:border-white/10 hover:bg-white/[0.02] transition-all duration-300"
+            >
               {/* Category header */}
-              <div className="flex items-center gap-3 mb-6">
-                <span className="text-xl sm:text-2xl">{category.icon}</span>
-                <h3 className="text-base sm:text-lg font-bold" style={{ color: category.color }}>
+              <div className="flex items-center gap-3 mb-6 pb-4 border-b border-white/5">
+                <div
+                  className="w-9 h-9 rounded-xl flex items-center justify-center text-base shrink-0"
+                  style={{
+                    background: `${category.color}12`,
+                    border: `1px solid ${category.color}25`,
+                  }}
+                >
+                  {category.icon}
+                </div>
+                <h3
+                  className="text-sm sm:text-base font-black tracking-tight"
+                  style={{ color: category.color }}
+                >
                   {category.category}
                 </h3>
-                <div className="ml-auto px-2.5 py-0.5 rounded-full text-xs font-medium"
-                  style={{ background: `${category.color}15`, border: `1px solid ${category.color}30`, color: category.color }}>
-                  {category.items.length} skills
-          </div>
-        </div>
+                <div
+                  className="ml-auto px-2.5 py-0.5 rounded-full text-[10px] font-bold"
+                  style={{
+                    background: `${category.color}12`,
+                    border: `1px solid ${category.color}25`,
+                    color: category.color,
+                  }}
+                >
+                  {category.items.length}
+                </div>
+              </div>
 
               {/* Skills */}
               <div className="space-y-4">
                 {category.items.map((skill, si) => (
                   <div key={si}>
                     <div className="flex justify-between items-center mb-2">
-                      <span className="text-xs sm:text-sm text-slate-300 font-medium">{skill.name}</span>
-                      <span className="text-xs font-mono" style={{ color: category.color }}>{skill.level}%</span>
-                      </div>
+                      <span className="text-xs sm:text-sm text-slate-300 font-medium">
+                        {skill.name}
+                      </span>
+                      <span
+                        className="text-xs font-mono"
+                        style={{ color: category.color }}
+                      >
+                        {skill.level}%
+                      </span>
+                    </div>
                     <div className="h-[3px] bg-slate-800/80 rounded-full overflow-hidden">
                       <div
                         className="skill-bar-fill h-full rounded-full origin-left"
@@ -127,9 +200,12 @@ export default function Skills() {
             { label: "Proficient (60–75%)", color: "#06b6d4" },
           ].map(({ label, color }) => (
             <div key={label} className="flex items-center gap-2">
-              <div className="w-8 h-[3px] rounded-full" style={{ background: color }} />
+              <div
+                className="w-8 h-[3px] rounded-full"
+                style={{ background: color }}
+              />
               <span>{label}</span>
-          </div>
+            </div>
           ))}
         </div>
       </div>

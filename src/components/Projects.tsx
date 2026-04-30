@@ -1,23 +1,14 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { projects } from "@/lib/data";
-import {
-  ExternalLink,
-  Star,
-  ArrowUpRight,
-  Package,
-  GitFork,
-  Globe,
-} from "lucide-react";
+import { ExternalLink, Star, ArrowUpRight, Package } from "lucide-react";
 import { GithubIcon } from "./Icons";
 import MagneticButton from "./MagneticButton";
 
 gsap.registerPlugin(ScrollTrigger);
-
-
 
 function TiltCard({
   children,
@@ -96,7 +87,6 @@ export default function Projects() {
   const spotlightRef = useRef<HTMLDivElement>(null);
   const gridRef = useRef<HTMLDivElement>(null);
 
-
   // Get all open source featured projects for spotlight
   const ossProjects = projects.filter(
     (p) => p.category === "Open Source" && p.featured,
@@ -144,13 +134,11 @@ export default function Projects() {
     return () => ctx.revert();
   }, []);
 
-
-
   return (
     <section
       id="projects"
       ref={sectionRef}
-      className="section-spacing relative overflow-hidden"
+      className="pt-2 sm:pt-14 lg:pt-4 pb-8 sm:pb-28 lg:pb-8 relative overflow-hidden"
     >
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute bottom-0 right-0 w-[350px] h-[350px] rounded-full bg-purple-500/5 blur-[90px]" />
@@ -160,7 +148,9 @@ export default function Projects() {
       <div className="section-container">
         {/* Header */}
         <div ref={headerRef} className="section-header">
-          <p className="reveal-item opacity-0 section-label mb-4 tracking-[0.3em] font-bold">Portfolio</p>
+          <p className="reveal-item opacity-0 section-label mb-4 tracking-[0.3em] font-bold">
+            Portfolio
+          </p>
           <h2 className="reveal-item opacity-0 text-3xl sm:text-5xl md:text-6xl font-black gradient-text-2 mb-6 tracking-tighter leading-tight">
             Featured Projects
           </h2>
@@ -174,7 +164,7 @@ export default function Projects() {
         {ossProjects.length > 0 && (
           <div
             ref={spotlightRef}
-            className="mb-20  sm:mb-28 grid md:grid-cols-2 gap-8 lg:gap-12"
+            className="mb-16 sm:mb-20 grid md:grid-cols-2 gap-6 lg:gap-10"
           >
             {ossProjects.map((oss) => (
               <div key={oss.id} className="oss-spotlight-card opacity-0">
@@ -201,10 +191,7 @@ export default function Projects() {
                     style={{ background: `${oss.color}12` }}
                   />
 
-                  <div
-                    className="p-6 sm:p-10 lg:p-12 p-4"
-                    style={{ padding: `12px` }}
-                  >
+                  <div className="p-6 sm:p-8 lg:p-10">
                     {/* Top: icon + badge */}
                     <div className="flex items-center gap-4 sm:gap-6 mb-6 sm:mb-8">
                       <div
@@ -338,7 +325,7 @@ export default function Projects() {
           </div>
         )}
 
-<br></br>
+        <br></br>
 
         {/* Grid */}
         <div

@@ -1,17 +1,10 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { experiences } from "@/lib/data";
-import {
-  ArrowUp,
-  Briefcase,
-  Calendar,
-  ChevronRight,
-  MapPin,
-  Sparkles,
-} from "lucide-react";
+import { Briefcase, Calendar, MapPin, Sparkles } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -19,7 +12,6 @@ export default function Experience() {
   const sectionRef = useRef<HTMLElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
   const timelineRef = useRef<HTMLDivElement>(null);
-
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -103,13 +95,11 @@ export default function Experience() {
     return () => ctx.revert();
   }, []);
 
-
-
   return (
     <section
       id="experience"
       ref={sectionRef}
-      className="py-20 sm:py-28 lg:py-36 relative overflow-hidden bg-[#050510] font-sans"
+      className="py-4 sm:py-6 lg:py-8 relative overflow-hidden bg-[#050510] font-sans"
     >
       {/* Structural Decor */}
       <div className="absolute inset-0 pointer-events-none">
@@ -161,8 +151,11 @@ export default function Experience() {
                 >
                   {/* Timeline Pulse Node */}
                   <div className="timeline-node absolute left-6 lg:left-1/2 top-10 -translate-x-1/2 z-20">
-                    <div className="w-4 h-4 rounded-full bg-white border-4 border-indigo-600 shadow-[0_0_15px_rgba(99,102,241,1)] group-hover:scale-125 transition-transform duration-500" />
-                    <div className="absolute inset-0 rounded-full bg-indigo-400/30 animate-ping" />
+                    <div className="relative w-5 h-5">
+                      <div className="absolute inset-0 rounded-full bg-indigo-400/25 animate-ping" />
+                      <div className="absolute inset-0 rounded-full bg-indigo-600 shadow-[0_0_14px_rgba(99,102,241,0.9)] group-hover:shadow-[0_0_22px_rgba(99,102,241,1)] transition-shadow duration-500" />
+                      <div className="absolute inset-[5px] rounded-full bg-white" />
+                    </div>
                   </div>
 
                   {/* Period Indicator (Opposite Side on Desktop) */}
@@ -280,7 +273,6 @@ export default function Experience() {
           </a>
         </div>
       </div>
-
     </section>
   );
 }
