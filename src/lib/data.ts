@@ -190,8 +190,8 @@ export const projects = [
     tech: ["PHP", "Laravel", "Composer", "Open Source"],
     category: "Open Source",
     featured: true,
-    link: "https://packagist.org/packages/isahaq/barcode-generator",
-    github: "https://github.com/isahaq1/BarcodeGeneratorPackage",
+    link: "https://packagist.org/packages/isahaq/barcode",
+    github: "https://github.com/isahaq1/barcodeGeneratorPkg",
     color: "#a855f7",
   },
   {
