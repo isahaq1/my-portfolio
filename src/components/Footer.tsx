@@ -21,7 +21,9 @@ export default function Footer() {
             <div className="flex items-center gap-2.5 justify-center sm:justify-start mb-3 group">
               <div className="w-8 h-8 rounded-lg border-animated p-[1px] shrink-0 transition-transform group-hover:scale-105">
                 <div className="w-full h-full bg-[#050510] rounded-[5px] flex items-center justify-center">
-                  <span className="text-[10px] font-black gradient-text">IS</span>
+                  <span className="text-[10px] font-black gradient-text">
+                    IS
+                  </span>
                 </div>
               </div>
               <span className="font-black text-sm text-slate-200 tracking-tight">
