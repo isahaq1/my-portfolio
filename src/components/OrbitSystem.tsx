@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { gsap } from "gsap";
+import { seededRandom } from "@/lib/random";
 
 interface Star {
   id: number;
@@ -78,6 +79,17 @@ const SATELLITES = [
     delay: "-2s",
     details: "Type-safe Development",
   },
+  {
+    id: "odoo",
+    label: "Odoo",
+    color: "#e879c7",
+    orbit: "o7",
+    rx: 212,
+    ry: 150,
+    dur: "25s",
+    delay: "-6s",
+    details: "Custom ERP Modules & Automation",
+  },
 ];
 
 const CX = 300;
@@ -85,20 +97,21 @@ const CY = 300;
 
 export default function OrbitSystem() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [stars, setStars] = useState<Star[]>([]);
   const [hovered, setHovered] = useState<string | null>(null);
 
-  useEffect(() => {
-    setStars(
-      Array.from({ length: 75 }, (_, i) => ({
-        id: i,
-        cx: Math.random() * 600,
-        cy: Math.random() * 600,
-        r: Math.random() * 1.7 + 0.25,
-        opacity: Math.random() * 0.45 + 0.06,
-      })),
-    );
+  // Deterministic stars: identical on server and client.
+  const stars = useMemo<Star[]>(() => {
+    const rand = seededRandom(7331);
+    return Array.from({ length: 75 }, (_, i) => ({
+      id: i,
+      cx: rand() * 600,
+      cy: rand() * 600,
+      r: rand() * 1.7 + 0.25,
+      opacity: rand() * 0.45 + 0.06,
+    }));
+  }, []);
 
+  useEffect(() => {
     const ctx = gsap.context(() => {
       gsap.fromTo(
         containerRef.current,
@@ -154,15 +167,17 @@ export default function OrbitSystem() {
   }, []);
 
   useEffect(() => {
-    if (stars.length === 0) return;
-    gsap.to(".star-dot", {
+    const tween = gsap.to(".star-dot", {
       opacity: 0.04,
       duration: "random(1.5,4)",
       repeat: -1,
       yoyo: true,
       stagger: { amount: 3.5, from: "random" },
     });
-  }, [stars]);
+    return () => {
+      tween.kill();
+    };
+  }, []);
 
   const hovData = SATELLITES.find((s) => s.id === hovered);
 
@@ -413,7 +428,7 @@ export default function OrbitSystem() {
         ))}
 
         {/* ── Satellites ── */}
-        {SATELLITES.map((s, i) => (
+        {SATELLITES.map((s) => (
           <g
             key={s.id}
             onMouseEnter={() => setHovered(s.id)}

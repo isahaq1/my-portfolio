@@ -11,7 +11,7 @@ import SmoothScroll from "@/components/SmoothScroll";
 import ScrollToTop from "@/components/ScrollToTop";
 
 function SectionDivider() {
-  return <div className="section-divider my-8 sm:my-16 lg:my-24" />;
+  return <div className="section-divider" aria-hidden />;
 }
 
 export default function Home() {

@@ -5,81 +5,69 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { skills } from "@/lib/data";
 import SkillsSolarSystem from "./SkillsSolarSystem";
+import SectionHeader from "./SectionHeader";
+import { revealOnScroll, prefersReducedMotion, EASE } from "@/lib/motion";
 
 gsap.registerPlugin(ScrollTrigger);
+
+const LEGEND = [
+  { label: "Expert · 90%+", color: "#6366f1" },
+  { label: "Advanced · 75–90%", color: "#a855f7" },
+  { label: "Proficient · 60–75%", color: "#06b6d4" },
+];
 
 export default function Skills() {
   const sectionRef = useRef<HTMLElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
   const gridRef = useRef<HTMLDivElement>(null);
   const solarRef = useRef<HTMLDivElement>(null);
+  const legendRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.fromTo(
-        headerRef.current?.querySelectorAll(".reveal-item") ?? [],
-        { opacity: 0, y: 35 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.7,
-          stagger: 0.1,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: headerRef.current,
-            start: "top 80%",
-            once: true,
-          },
-        },
-      );
+      revealOnScroll(headerRef.current?.querySelectorAll(".reveal-item") ?? [], {
+        trigger: headerRef.current,
+      });
 
-      gsap.fromTo(
-        solarRef.current,
-        { opacity: 0, scale: 0.85 },
-        {
-          opacity: 1,
-          scale: 1,
-          duration: 1.2,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: solarRef.current,
-            start: "top 80%",
-            once: true,
-          },
-        },
-      );
+      revealOnScroll(solarRef.current, {
+        trigger: solarRef.current,
+        y: 0,
+        scale: 0.9,
+        blur: 0,
+        duration: 1.2,
+      });
 
-      gsap.fromTo(
-        gridRef.current?.querySelectorAll(".skill-card") ?? [],
-        { opacity: 0, y: 50, scale: 0.96 },
-        {
-          opacity: 1,
-          y: 0,
-          scale: 1,
-          duration: 0.7,
-          stagger: 0.13,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: gridRef.current,
-            start: "top 75%",
-            once: true,
-          },
-        },
-      );
+      revealOnScroll(gridRef.current?.querySelectorAll(".skill-card") ?? [], {
+        trigger: gridRef.current,
+        start: "top 78%",
+        y: 40,
+        scale: 0.97,
+        stagger: 0.12,
+      });
 
       const bars = gridRef.current?.querySelectorAll(".skill-bar-fill") ?? [];
       bars.forEach((bar) => {
-        const target = (bar as HTMLElement).dataset.level ?? "0";
+        const target = parseFloat((bar as HTMLElement).dataset.level ?? "0");
+        if (prefersReducedMotion()) {
+          gsap.set(bar, { scaleX: target / 100 });
+          return;
+        }
         gsap.fromTo(
           bar,
           { scaleX: 0 },
           {
-            scaleX: parseFloat(target) / 100,
-            duration: 1.2,
-            ease: "power3.out",
+            scaleX: target / 100,
+            duration: 1.3,
+            ease: EASE.expo,
             scrollTrigger: { trigger: bar, start: "top 90%", once: true },
           },
         );
+      });
+
+      revealOnScroll(legendRef.current, {
+        trigger: legendRef.current,
+        y: 16,
+        blur: 0,
       });
     }, sectionRef);
 
@@ -94,29 +82,26 @@ export default function Skills() {
     >
       {/* Background glows */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/4 -left-16 w-[300px] h-[300px] rounded-full bg-indigo-500/5 blur-[90px]" />
-        <div className="absolute bottom-1/4 -right-16 w-[300px] h-[300px] rounded-full bg-cyan-500/5 blur-[90px]" />
+        <div className="absolute top-1/4 -left-16 w-[340px] h-[340px] rounded-full bg-indigo-500/[0.06] blur-[100px]" />
+        <div className="absolute bottom-1/4 -right-16 w-[340px] h-[340px] rounded-full bg-cyan-500/[0.05] blur-[100px]" />
       </div>
 
       <div className="section-container">
-        {/* Header */}
-        <div ref={headerRef} className="text-center mb-16 lg:mb-24">
-          <p className="reveal-item opacity-0 section-label mb-5 tracking-[0.3em] font-bold">
-            What I work with
-          </p>
-          <h2 className="reveal-item opacity-0 text-3xl sm:text-5xl md:text-6xl font-black gradient-text-2 mb-6 tracking-tighter leading-tight">
-            Skills &amp; Technologies
-          </h2>
-          <p className="reveal-item opacity-0 text-slate-400/80 text-sm sm:text-base md:text-lg max-w-2xl mx-auto leading-relaxed font-light tracking-wide">
-            A comprehensive toolkit built over 5+ years of professional
-            development across multiple domains and industries.
-          </p>
-        </div>
+        <SectionHeader
+          ref={headerRef}
+          eyebrow="What I work with"
+          title={
+            <>
+              Skills &amp; <span className="gradient-text">Technologies</span>
+            </>
+          }
+          lead="A comprehensive toolkit built over 6+ years of professional development across multiple domains and industries."
+        />
 
         {/* Solar system orbit animation */}
         <div
           ref={solarRef}
-          className="opacity-0 mb-16 sm:mb-24 lg:mb-32 scale-75 sm:scale-100 origin-center transition-transform"
+          className="opacity-0 mb-14 sm:mb-20 lg:mb-24 scale-75 sm:scale-100 origin-center"
         >
           <SkillsSolarSystem />
         </div>
@@ -124,87 +109,96 @@ export default function Skills() {
         {/* Skill categories grid */}
         <div
           ref={gridRef}
-          className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6"
+          className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-6"
         >
-          {skills.map((category, ci) => (
-            <div
-              key={ci}
-              className="skill-card opacity-0 glass-card rounded-2xl p-6 lg:p-8 hover:border-white/10 hover:bg-white/[0.02] transition-all duration-300"
+          {skills.map((category) => (
+            <article
+              key={category.category}
+              className="skill-card opacity-0 glass-card glass-card-lift rounded-3xl p-6 sm:p-7 lg:p-8"
             >
               {/* Category header */}
-              <div className="flex items-center gap-3 mb-6 pb-4 border-b border-white/5">
+              <header className="flex items-center gap-3.5 mb-6 pb-5 border-b border-white/[0.06]">
                 <div
-                  className="w-9 h-9 rounded-xl flex items-center justify-center text-base shrink-0"
+                  className="w-11 h-11 rounded-xl flex items-center justify-center text-lg shrink-0"
                   style={{
-                    background: `${category.color}12`,
-                    border: `1px solid ${category.color}25`,
+                    background: `${category.color}14`,
+                    border: `1px solid ${category.color}30`,
+                    boxShadow: `0 0 24px -8px ${category.color}80`,
                   }}
                 >
                   {category.icon}
                 </div>
-                <h3
-                  className="text-sm sm:text-base font-black tracking-tight"
-                  style={{ color: category.color }}
-                >
-                  {category.category}
-                </h3>
-                <div
-                  className="ml-auto px-2.5 py-0.5 rounded-full text-[10px] font-bold"
+                <div className="min-w-0">
+                  <h3 className="text-base sm:text-lg font-extrabold tracking-tight text-white leading-tight">
+                    {category.category}
+                  </h3>
+                  <p className="text-[11px] uppercase tracking-[0.16em] text-slate-500 font-semibold mt-0.5">
+                    {category.items.length} technologies
+                  </p>
+                </div>
+                <span
+                  className="ml-auto px-2.5 py-1 rounded-full text-[10px] font-bold tabular-nums"
                   style={{
-                    background: `${category.color}12`,
-                    border: `1px solid ${category.color}25`,
+                    background: `${category.color}14`,
+                    border: `1px solid ${category.color}30`,
                     color: category.color,
                   }}
                 >
-                  {category.items.length}
-                </div>
-              </div>
+                  {Math.round(
+                    category.items.reduce((a, s) => a + s.level, 0) /
+                      category.items.length,
+                  )}
+                  % avg
+                </span>
+              </header>
 
               {/* Skills */}
-              <div className="space-y-4">
-                {category.items.map((skill, si) => (
-                  <div key={si}>
-                    <div className="flex justify-between items-center mb-2">
-                      <span className="text-xs sm:text-sm text-slate-300 font-medium">
+              <ul className="space-y-4">
+                {category.items.map((skill) => (
+                  <li key={skill.name}>
+                    <div className="flex justify-between items-baseline mb-2">
+                      <span className="text-sm text-slate-200 font-medium">
                         {skill.name}
                       </span>
                       <span
-                        className="text-xs font-mono"
+                        className="text-xs font-mono tabular-nums"
                         style={{ color: category.color }}
                       >
                         {skill.level}%
                       </span>
                     </div>
-                    <div className="h-[3px] bg-slate-800/80 rounded-full overflow-hidden">
+                    <div className="h-1.5 bg-white/[0.05] rounded-full overflow-hidden">
                       <div
                         className="skill-bar-fill h-full rounded-full origin-left"
                         data-level={skill.level}
                         style={{
-                          background: `linear-gradient(90deg, ${category.color}, ${category.color}80)`,
-                          boxShadow: `0 0 8px ${category.color}50`,
+                          background: `linear-gradient(90deg, ${category.color}, ${category.color}99)`,
+                          boxShadow: `0 0 10px ${category.color}66`,
                         }}
                       />
                     </div>
-                  </div>
+                  </li>
                 ))}
-              </div>
-            </div>
+              </ul>
+            </article>
           ))}
         </div>
 
         {/* Legend */}
-        <div className="mt-12 flex flex-wrap justify-center gap-6 text-xs text-slate-600">
-          {[
-            { label: "Expert (90%+)", color: "#6366f1" },
-            { label: "Advanced (75–90%)", color: "#a855f7" },
-            { label: "Proficient (60–75%)", color: "#06b6d4" },
-          ].map(({ label, color }) => (
-            <div key={label} className="flex items-center gap-2">
-              <div
-                className="w-8 h-[3px] rounded-full"
-                style={{ background: color }}
+        <div
+          ref={legendRef}
+          className="opacity-0 mt-10 flex flex-wrap justify-center gap-x-8 gap-y-3 text-xs text-slate-500"
+        >
+          {LEGEND.map(({ label, color }) => (
+            <div key={label} className="flex items-center gap-2.5">
+              <span
+                className="w-8 h-1 rounded-full"
+                style={{
+                  background: color,
+                  boxShadow: `0 0 10px ${color}80`,
+                }}
               />
-              <span>{label}</span>
+              <span className="font-medium tracking-wide">{label}</span>
             </div>
           ))}
         </div>

@@ -16,6 +16,7 @@ const SKILL_ITEMS = [
   { name: "Node.js", color: "#22c55e", size: 18, orbit: 1 },
   { name: "React", color: "#61dafb", size: 18, orbit: 1 },
   { name: "Next.js", color: "#f8fafc", size: 16, orbit: 1 },
+  { name: "Odoo", color: "#a24689", size: 17, orbit: 1 },
   { name: "PHP", color: "#8b5cf6", size: 17, orbit: 1 },
   { name: "TypeScript", color: "#3178c6", size: 16, orbit: 2 },
   { name: "Docker", color: "#0ea5e9", size: 15, orbit: 2 },

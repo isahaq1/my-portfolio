@@ -1,15 +1,15 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { gsap } from "gsap";
 import { TypeAnimation } from "react-type-animation";
 import { personalInfo, stats, techStack } from "@/lib/data";
-import { Mail, MapPin, Briefcase } from "lucide-react";
-import { GithubIcon, LinkedinIcon } from "./Icons";
+import { MapPin, Briefcase, Download } from "lucide-react";
 import MagneticButton from "./MagneticButton";
 import AnimatedCounter from "./AnimatedCounter";
 import ParticleCanvas from "./ParticleCanvas";
 import OrbitSystem from "./OrbitSystem";
+import { seededRandom } from "@/lib/random";
 
 interface Star {
   id: number;
@@ -29,25 +29,21 @@ export default function Hero() {
   const descRef = useRef<HTMLParagraphElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
   const statsRef = useRef<HTMLDivElement>(null);
-  const scrollRef = useRef<HTMLDivElement>(null);
   const lineRef = useRef<HTMLDivElement>(null);
 
-  const [stars, setStars] = useState<Star[]>([]);
-
-  // Generate stars client-only (avoid SSR hydration mismatch)
-  useEffect(() => {
-    setStars(
-      Array.from({ length: 50 }, (_, id) => ({
-        id,
-        width: Math.random() * 2 + 0.8,
-        height: Math.random() * 2 + 0.8,
-        top: Math.random() * 100,
-        left: Math.random() * 100,
-        opacity: Math.random() * 0.4 + 0.08,
-        duration: Math.random() * 3 + 2,
-        delay: Math.random() * 4,
-      })),
-    );
+  // Deterministic stars: identical on server and client, so no effect needed.
+  const stars = useMemo<Star[]>(() => {
+    const rand = seededRandom(20260920);
+    return Array.from({ length: 50 }, (_, id) => ({
+      id,
+      width: rand() * 2 + 0.8,
+      height: rand() * 2 + 0.8,
+      top: rand() * 100,
+      left: rand() * 100,
+      opacity: rand() * 0.4 + 0.08,
+      duration: rand() * 3 + 2,
+      delay: rand() * 4,
+    }));
   }, []);
 
   useEffect(() => {
@@ -116,12 +112,7 @@ export default function Hero() {
         },
         "-=0.2",
       )
-      .fromTo(
-        scrollRef.current,
-        { opacity: 0 },
-        { opacity: 1, duration: 0.5 },
-        "-=0.1",
-      );
+;
 
     // Mouse parallax
     const onMove = (e: MouseEvent) => {
@@ -184,7 +175,7 @@ export default function Hero() {
       </div>
 
       {/* ─── Main content — 2-column on large screens ─── */}
-      <div className="relative z-10 w-full section-container pt-24 pb-28 lg:pt-36 lg:pb-40">
+      <div className="relative z-10 w-full section-container pt-28 pb-24 lg:pt-32 lg:pb-28">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-24 items-center">
           {/* ── Left column — text content ── */}
           <div className="text-center lg:text-left">
@@ -197,12 +188,12 @@ export default function Hero() {
             {/* Available badge */}
             <div ref={greetRef} className="opacity-0 mb-8 lg:mb-10">
               <MagneticButton strength={0.25} className="mx-auto lg:ml-0">
-                <div className="inline-flex items-center gap-2.5 sm:gap-4 px-4 sm:px-5 py-2.5 sm:py-3 rounded-full glass-card border border-indigo-500/30">
+                <div className="inline-flex items-center gap-2.5 sm:gap-3 px-4 sm:px-5 py-2 sm:py-2.5 rounded-full glass-card border-indigo-500/30">
                   <span className="relative flex h-2.5 w-2.5">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
                     <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500" />
                   </span>
-                  <span className="text-xs sm:text-base text-slate-300 font-medium">
+                  <span className="text-xs sm:text-sm text-slate-300 font-medium tracking-wide">
                     Available for opportunities
                   </span>
                 </div>
@@ -214,10 +205,10 @@ export default function Hero() {
               ref={nameRef}
               className="opacity-0 font-black mb-6 lg:mb-8 tracking-tighter leading-[1.05]"
             >
-              <span className="block text-slate-100/90 text-2xl sm:text-3xl md:text-5xl lg:text-6xl mb-2 sm:mb-4 tracking-tight">
+              <span className="block text-slate-200/90 text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-2 sm:mb-3 tracking-tight">
                 Hi, I&apos;m
               </span>
-              <span className="block gradient-text drop-shadow-[0_0_30px_rgba(99,102,241,0.2)]">
+              <span className="block display-1 gradient-text drop-shadow-[0_0_30px_rgba(99,102,241,0.2)]">
                 {personalInfo.name}
               </span>
             </h1>
@@ -246,13 +237,13 @@ export default function Hero() {
             {/* Bio */}
             <p
               ref={descRef}
-              className="opacity-0 text-slate-400/90 text-base sm:text-lg lg:text-xl leading-[1.8] font-light tracking-wide mb-12 max-w-2xl mx-auto lg:mx-0"
+              className="opacity-0 section-lead mb-10 mx-auto lg:mx-0"
             >
               {personalInfo.shortBio}
             </p>
 
             {/* Location & company */}
-            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 sm:gap-8 mb-10 lg:mb-12 text-sm sm:text-base text-slate-500">
+            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 sm:gap-6 mb-9 lg:mb-10 text-sm text-slate-500">
               <div className="flex items-center gap-2">
                 <MapPin size={16} className="text-indigo-400" />
                 <span>{personalInfo.location}</span>
@@ -267,7 +258,7 @@ export default function Hero() {
             {/* CTA buttons */}
             <div
               ref={ctaRef}
-              className="flex flex-wrap  items-center justify-center lg:justify-start gap-4 sm:gap-6 mb-16 sm:mb-24"
+              className="flex flex-wrap items-center justify-center lg:justify-start gap-3 sm:gap-4 mb-12 sm:mb-16"
             >
               <MagneticButton className="cta-item opacity-0 -m-5">
                 <a
@@ -278,10 +269,20 @@ export default function Hero() {
                       .getElementById("projects")
                       ?.scrollIntoView({ behavior: "smooth" });
                   }}
-                  className="px-7 sm:px-9 py-3.5 sm:py-4 rounded-full btn-primary font-bold cursor-none text-sm sm:text-base inline-flex items-center"
+                  className="px-7 sm:px-8 py-3.5 sm:py-4 rounded-full btn-primary cursor-none text-sm sm:text-base"
                 >
-                  View My Work{" "}
-                  <span className="text-base sm:text-lg ml-1">→</span>
+                  View My Work
+                  <span className="text-base sm:text-lg">→</span>
+                </a>
+              </MagneticButton>
+              <MagneticButton className="cta-item opacity-0 -m-5">
+                <a
+                  href={personalInfo.resumeUrl}
+                  download="HM-Isahaq-Resume.pdf"
+                  className="px-7 sm:px-8 py-3.5 sm:py-4 rounded-full btn-outline text-slate-200 cursor-none text-sm sm:text-base"
+                >
+                  <Download size={16} className="text-indigo-400" />
+                  Download Resume
                 </a>
               </MagneticButton>
             </div>
@@ -296,7 +297,7 @@ export default function Hero() {
                   <div className="text-2xl sm:text-3xl font-black gradient-text">
                     <AnimatedCounter value={stat.value} />
                   </div>
-                  <div className="text-[10px] sm:text-xs text-slate-600 mt-1 uppercase tracking-wider">
+                  <div className="text-[10px] sm:text-xs text-slate-500 mt-1.5 uppercase tracking-[0.14em] font-semibold">
                     {stat.label}
                   </div>
                 </div>
@@ -311,41 +312,28 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Tech ticker — two rows, opposite directions */}
-      <div className="absolute bottom-20 lg:bottom-24 left-0 right-0 overflow-hidden select-none pointer-events-none">
-        <div className="py-5 border-t border-b border-indigo-500/10 space-y-4 backdrop-blur-[2px]">
-          {/* Row 1 → */}
-          <div className="ticker-track flex gap-12 whitespace-nowrap w-max">
-            {[...techStack, ...techStack].map((tech, i) => (
-              <span
-                key={i}
-                className="text-xs sm:text-sm text-slate-500 font-mono flex items-center gap-3"
-              >
-                <span className="text-indigo-500/40">◆</span>
-                {tech}
-              </span>
-            ))}
-          </div>
-          {/* Row 2 ← */}
-          <div
-            className="flex gap-12 whitespace-nowrap w-max"
-            style={{ animation: "ticker 32s linear infinite reverse" }}
-          >
-            {[
-              ...techStack.slice().reverse(),
-              ...techStack.slice().reverse(),
-            ].map((tech, i) => (
-              <span
-                key={i}
-                className="text-xs sm:text-sm text-slate-500/60 font-mono flex items-center gap-3"
-              >
-                <span className="text-purple-500/30">◆</span>
-                {tech}
-              </span>
-            ))}
+      {/* Tech marquee — single clean band with a pinned label */}
+      <div className="marquee absolute bottom-0 left-0 right-0 z-10 select-none">
+        <div className="marquee-inner">
+          <span className="marquee-label">
+            <span className="marquee-label-bar" aria-hidden />
+            Tech Stack
+          </span>
+          <div className="marquee-viewport">
+            <div className="marquee-track">
+              {[...techStack, ...techStack].map((tech, i) => (
+                <span key={i} className="marquee-item">
+                  <span className="marquee-sep" aria-hidden>
+                    ◆
+                  </span>
+                  {tech}
+                </span>
+              ))}
+            </div>
           </div>
         </div>
       </div>
+
     </section>
   );
 }

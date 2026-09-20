@@ -9,6 +9,7 @@ export default function Navbar() {
   const navRef    = useRef<HTMLElement>(null);
   const logoRef   = useRef<HTMLDivElement>(null);
   const linksRef  = useRef<HTMLDivElement>(null);
+  const progressRef = useRef<HTMLDivElement>(null);
   const [scrolled,       setScrolled]       = useState(false);
   const [activeSection,  setActiveSection]  = useState("home");
   const [menuOpen,       setMenuOpen]       = useState(false);
@@ -29,6 +30,10 @@ export default function Navbar() {
   useEffect(() => {
     const onScroll = () => {
       setScrolled(window.scrollY > 50);
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      if (progressRef.current) {
+        progressRef.current.style.transform = `scaleX(${max > 0 ? Math.min(1, window.scrollY / max) : 0})`;
+      }
       const sections = navLinks.map((l) => l.href.replace("#", ""));
       for (const s of [...sections].reverse()) {
         const el = document.getElementById(s);
@@ -57,6 +62,7 @@ export default function Navbar() {
             : "py-5 bg-transparent"
         }`}
       >
+        <div ref={progressRef} className="scroll-progress" aria-hidden />
         <div className="section-container flex items-center justify-between">
 
           {/* Logo */}
@@ -76,7 +82,7 @@ export default function Navbar() {
           </div>
 
           {/* Desktop links */}
-          <div ref={linksRef} className="hidden md:flex items-center gap-8">
+          <div ref={linksRef} className="hidden md:flex items-center gap-7 lg:gap-9">
             {navLinks.map((link) => {
               const isActive = activeSection === link.href.replace("#", "");
               return (

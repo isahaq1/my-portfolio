@@ -9,7 +9,8 @@ export const personalInfo = {
   linkedin: "https://www.linkedin.com/in/hm-isahaq-6b1593132/",
   bio: "Senior Full Stack Developer with 6+ years of experience building enterprise-level applications. Passionate about clean architecture, microservices, and delivering scalable solutions that drive business impact.",
   shortBio:
-    "I craft robust backends and sleek frontends — turning complex problems into elegant, high-performance web solutions.",
+    "Building next-generation web experiences with modern technologies, dynamic animations, intelligent interactions, and clean, high-performance design.",
+  resumeUrl: "/resume",
 };
 
 export const skills = [
@@ -23,6 +24,7 @@ export const skills = [
       { name: "Spring Boot", level: 72 },
       { name: "NestJS", level: 78 },
       { name: "RESTful APIs", level: 95 },
+      { name: "Odoo ERP / Python", level: 80 },
       { name: "GraphQL", level: 70 },
     ],
   },
@@ -86,6 +88,7 @@ export const skillPlanets = [
   { name: "Kafka", color: "#a3a3a3", size: 11, orbit: 3 },
   { name: "K8s", color: "#3b82f6", size: 12, orbit: 3 },
   { name: "Vue", color: "#10b981", size: 12, orbit: 3 },
+  { name: "Odoo", color: "#a24689", size: 14, orbit: 2 },
 ];
 
 export const techStack = [
@@ -109,6 +112,8 @@ export const techStack = [
   "Kafka",
   "Jenkins",
   "Linux",
+  "Odoo",
+  "Python",
 ];
 
 export const experiences = [
@@ -120,12 +125,12 @@ export const experiences = [
     type: "Current",
     description:
       "Leading full-stack development of enterprise solutions, architecting scalable microservices, and mentoring junior developers. Delivering high-impact digital transformation projects.",
-    tech: ["Laravel", "Node.js", "React", "Next.js", "Docker", "MySQL"],
+    tech: ["Laravel", "Node.js", "React", "Next.js", "Odoo", "Docker", "MySQL"],
     highlights: [
+      "Task & Ticketing System and Document Approval Application",
+      "Canteen Management and Procurement applications",
+      "Cattle Breeding and Poultry Breeding ERPs built on Odoo",
       "Architecting microservices-based enterprise solutions",
-      "Leading cross-functional development teams",
-      "Driving digital transformation initiatives",
-      "Optimizing system performance and scalability",
     ],
   },
   {
@@ -190,9 +195,18 @@ export const projects = [
     tech: ["PHP", "Laravel", "Composer", "Open Source"],
     category: "Open Source",
     featured: true,
-    link: "https://packagist.org/packages/isahaq/barcode-generator",
+    link: "https://packagist.org/packages/isahaq/barcode-qrcode-generator",
     github: "https://github.com/isahaq1/BarcodeGeneratorPackage",
     color: "#a855f7",
+    registry: "Composer",
+    icon: "📦",
+    install: "composer require isahaq/barcode-qrcode-generator",
+    summary: "30+ barcode & QR formats for Laravel",
+    stats: {
+      formats: "30+",
+      version: "v1.0.1",
+      license: "MIT",
+    },
   },
   {
     id: 7,
@@ -205,9 +219,55 @@ export const projects = [
     link: "https://www.npmjs.com/package/@isahaq/numbertostring",
     github: "https://github.com/isahaq1/numbertostring",
     color: "#f59e0b",
+    registry: "NPM",
+    icon: "🌐",
+    install: "npm i @isahaq/numbertostring",
+    summary: "Numbers to words in 7+ languages",
     stats: {
       languages: "7+",
       version: "v2.8.0",
+      license: "MIT",
+    },
+  },
+  {
+    id: 8,
+    title: "Num2Str — Number to Words (EN / BN)",
+    description:
+      "Composer package for Laravel that converts numbers into English or Bangla words. Supports dependency injection, manual instantiation, and route closures. Compatible with PHP 8+ and Laravel 9 through 12.",
+    tech: ["PHP", "Laravel", "Composer", "Open Source"],
+    category: "Open Source",
+    featured: true,
+    link: "https://packagist.org/packages/isahaq/num2str",
+    github: "https://github.com/isahaq1/num2wordConverter",
+    color: "#ec4899",
+    registry: "Composer",
+    icon: "🔢",
+    install: "composer require isahaq/num2str",
+    summary: "Numbers to English & Bangla words",
+    stats: {
+      languages: "2",
+      version: "v1.0.0",
+      license: "MIT",
+    },
+  },
+  {
+    id: 9,
+    title: "Modern CMS — Drag & Drop Website Builder",
+    description:
+      "Self-hosted, drag-and-drop website CMS built with Next.js, Express, and Prisma. Interactive installer scaffolds a full project with PostgreSQL or MySQL and S3, Azure Blob, or Cloudinary storage. Ships 30+ content blocks, draft/publish workflow, i18n with RTL, SEO, and RBAC.",
+    tech: ["Next.js", "Express", "Prisma", "NPM", "Open Source"],
+    category: "Open Source",
+    featured: true,
+    link: "https://www.npmjs.com/package/modern-cms",
+    github: "https://github.com/isahaq1/Modern-CMS",
+    color: "#22c55e",
+    registry: "NPM",
+    icon: "🧩",
+    install: "npx modern-cms",
+    summary: "Drag & drop CMS, scaffolded in one command",
+    stats: {
+      blocks: "30+",
+      version: "v1.1.9",
       license: "MIT",
     },
   },
@@ -222,6 +282,78 @@ export const projects = [
     link: null,
     github: null,
     color: "#06b6d4",
+  },
+  {
+    id: 10,
+    title: "Task & Ticketing System",
+    description:
+      "Internal task management and helpdesk ticketing platform with SLA tracking, priority queues, assignment workflows, escalation rules, and real-time status dashboards for support and operations teams.",
+    tech: ["Laravel", "Next.js", "MySQL", "Redis", "REST API"],
+    category: "Enterprise",
+    featured: false,
+    link: null,
+    github: null,
+    color: "#8b5cf6",
+  },
+  {
+    id: 11,
+    title: "Document Approval Application",
+    description:
+      "Multi-level document approval workflow with configurable approval chains, digital sign-off, version history, audit trails, and notifications — replacing paper-based approvals across departments.",
+    tech: ["Laravel", "React", "PostgreSQL", "Docker", "REST API"],
+    category: "Enterprise",
+    featured: false,
+    link: null,
+    github: null,
+    color: "#0ea5e9",
+  },
+  {
+    id: 12,
+    title: "Canteen Management System",
+    description:
+      "End-to-end canteen operations platform covering meal scheduling, employee subscriptions, token/QR-based serving, inventory, vendor billing, and consumption analytics.",
+    tech: ["Laravel", "Node.js", "MySQL", "QR Code", "JavaScript"],
+    category: "Enterprise",
+    featured: false,
+    link: null,
+    github: null,
+    color: "#f97316",
+  },
+  {
+    id: 13,
+    title: "Procurement Application",
+    description:
+      "Procure-to-pay system with purchase requisitions, multi-stage approvals, vendor management, RFQ comparison, purchase orders, goods receipt, and budget controls integrated with finance.",
+    tech: ["Laravel", "Next.js", "PostgreSQL", "Redis", "Docker"],
+    category: "Enterprise",
+    featured: false,
+    link: null,
+    github: null,
+    color: "#14b8a6",
+  },
+  {
+    id: 14,
+    title: "Cattle Breeding ERP (Odoo)",
+    description:
+      "Custom Odoo ERP for cattle breeding operations — herd registry, lineage and genetics tracking, breeding cycles, health and vaccination records, feed management, and farm-level financial reporting.",
+    tech: ["Odoo", "Python", "PostgreSQL", "XML", "ERP"],
+    category: "ERP",
+    featured: false,
+    link: null,
+    github: null,
+    color: "#84cc16",
+  },
+  {
+    id: 15,
+    title: "Poultry Breeding ERP (Odoo)",
+    description:
+      "Odoo-based ERP for poultry breeding — flock lifecycle management, hatchery and egg production tracking, feed conversion, mortality and biosecurity logs, and integrated sales and inventory.",
+    tech: ["Odoo", "Python", "PostgreSQL", "XML", "ERP"],
+    category: "ERP",
+    featured: false,
+    link: null,
+    github: null,
+    color: "#eab308",
   },
   {
     id: 4,
@@ -262,7 +394,7 @@ export const projects = [
 ];
 
 export const stats = [
-  { label: "Years Experience", value: "5+", suffix: "" },
+  { label: "Years Experience", value: "6+", suffix: "" },
   { label: "Projects Delivered", value: "30+", suffix: "" },
   { label: "Technologies", value: "20+", suffix: "" },
   { label: "Users Served", value: "1K+", suffix: "" },

@@ -5,9 +5,10 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
 import { personalInfo } from "@/lib/data";
-import { Mail, Code2, Server, Cloud, ChevronRight } from "lucide-react";
+import { Mail, Code2, Server, Cloud } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "./Icons";
 import MagneticButton from "./MagneticButton";
+import { revealOnScroll } from "@/lib/motion";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -38,62 +39,34 @@ export default function About() {
   const cardRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<HTMLDivElement>(null);
+  const labelRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Sophisticated reveals
-      gsap.fromTo(
-        contentRef.current?.querySelectorAll(".reveal-item") ?? [],
-        { opacity: 0, y: 40, filter: "blur(10px)" },
-        {
-          opacity: 1,
-          y: 0,
-          filter: "blur(0px)",
-          duration: 1.2,
-          stagger: 0.1,
-          ease: "expo.out",
-          scrollTrigger: {
-            trigger: contentRef.current,
-            start: "top 85%",
-            once: true,
-          },
-        },
-      );
+      revealOnScroll(labelRef.current, { trigger: labelRef.current, y: 16 });
 
-      gsap.fromTo(
-        cardsRef.current?.querySelectorAll(".highlight-card") ?? [],
-        { opacity: 0, y: 30, scale: 0.95 },
-        {
-          opacity: 1,
-          y: 0,
-          scale: 1,
-          duration: 0.8,
-          stagger: 0.15,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: cardsRef.current,
-            start: "top 90%",
-            once: true,
-          },
-        },
-      );
+      revealOnScroll(contentRef.current?.querySelectorAll(".reveal-item") ?? [], {
+        trigger: contentRef.current,
+        start: "top 80%",
+        y: 36,
+      });
 
-      gsap.fromTo(
-        imageRef.current,
-        { opacity: 0, scale: 0.9, rotateY: -10 },
-        {
-          opacity: 1,
-          scale: 1,
-          rotateY: 0,
-          duration: 1.5,
-          ease: "expo.out",
-          scrollTrigger: {
-            trigger: imageRef.current,
-            start: "top 80%",
-            once: true,
-          },
-        },
-      );
+      revealOnScroll(cardsRef.current?.querySelectorAll(".highlight-card") ?? [], {
+        trigger: cardsRef.current,
+        start: "top 85%",
+        y: 32,
+        scale: 0.97,
+        stagger: 0.14,
+      });
+
+      revealOnScroll(imageRef.current, {
+        trigger: imageRef.current,
+        start: "top 78%",
+        y: 0,
+        scale: 0.92,
+        blur: 0,
+        duration: 1.2,
+      });
     }, sectionRef);
     return () => ctx.revert();
   }, []);
@@ -149,7 +122,7 @@ export default function About() {
     <section
       id="about"
       ref={sectionRef}
-      className="py-20 sm:py-24 lg:py-32 xl:py-40 relative overflow-hidden bg-[#050510]"
+      className="section-spacing relative overflow-hidden"
     >
       {/* Dynamic Background Elements */}
       <div className="absolute inset-0 pointer-events-none">
@@ -159,25 +132,25 @@ export default function About() {
       </div>
 
       <div className="section-container relative z-10">
-        {/* Modern Header Concept */}
-        <div className="reveal-item opacity-0 flex items-center gap-4 mb-16 sm:mb-24">
-          <div className="h-px w-12 bg-indigo-500/40" />
-          <span className="text-xs font-black text-indigo-400 uppercase tracking-[0.4em]">
-            Insight & Strategy
+        {/* Section label */}
+        <div ref={labelRef} className="opacity-0 mb-10 sm:mb-14">
+          <span className="eyebrow">
+            <span className="eyebrow-dash" aria-hidden />
+            About Me
           </span>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-24 items-start mb-20 lg:mb-32">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center mb-16 lg:mb-24">
           {/* ── Visual Side ── */}
-          <div ref={imageRef} className="opacity-0 relative group">
+          <div ref={imageRef} className="opacity-0 relative group min-w-0">
             {/* Multi-layered Glass Effect */}
             <div className="absolute -inset-6 rounded-[4rem] bg-gradient-to-tr from-indigo-500/10 via-transparent to-purple-500/10 blur-2xl opacity-50 group-hover:opacity-100 transition-opacity duration-1000" />
 
-            <div className="relative pt-8 pb-8 px-4 sm:px-10">
+            <div className="relative pt-8 pb-10 px-4 sm:px-10">
               {/* 3D Glass Surface */}
               <div
                 ref={cardRef}
-                className="relative glass-card rounded-[2rem] sm:rounded-[3rem] p-7 sm:p-10 border border-white/10 shadow-[0_32px_64px_-16px_rgba(0,0,0,0.5)] overflow-hidden"
+                className="relative glass-card rounded-[2rem] p-7 sm:p-9 border-white/10 shadow-[0_32px_64px_-16px_rgba(0,0,0,0.5)] overflow-hidden"
                 style={{ transformStyle: "preserve-3d" }}
               >
                 <div className="card-shine absolute inset-0 opacity-0 pointer-events-none bg-gradient-to-br from-white/20 to-transparent blur-3xl transition-opacity duration-300" />
@@ -202,8 +175,8 @@ export default function About() {
                   <h3 className="text-3xl sm:text-4xl font-black text-white mb-3 tracking-tight">
                     {personalInfo.name}
                   </h3>
-                  <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-indigo-500/10 border border-indigo-500/20 mb-10">
-                    <span className="text-[10px] text-indigo-400 font-black uppercase tracking-widest">
+                  <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-indigo-500/10 border border-indigo-500/20 mb-8">
+                    <span className="text-[10px] text-indigo-300 font-extrabold uppercase tracking-[0.18em]">
                       {personalInfo.title}
                     </span>
                   </div>
@@ -228,7 +201,8 @@ export default function About() {
                         <a
                           href={btn.href}
                           target="_blank"
-                          className="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-slate-400 hover:text-white hover:bg-indigo-500/20 hover:border-indigo-500/50 transition-all duration-300"
+                          rel="noopener noreferrer"
+                          className="w-13 h-13 rounded-2xl btn-icon cursor-none"
                         >
                           {btn.icon}
                         </a>
@@ -239,45 +213,45 @@ export default function About() {
               </div>
 
               {/* Status Indicator Badge */}
-              <div className="absolute -top-4 -right-2 sm:top-5 sm:right-0 glass-card px-6 py-4 rounded-3xl border border-green-500/30 flex items-center gap-3 shadow-2xl shadow-green-500/10 floating">
+              <div className="absolute -top-3 right-2 sm:top-4 sm:right-2 glass-card px-5 py-3 rounded-2xl border-green-500/30 flex items-center gap-2.5 shadow-2xl shadow-green-500/10 floating">
                 <span className="w-3 h-3 rounded-full bg-green-400 animate-pulse shadow-[0_0_12px_rgba(74,222,128,1)]" />
-                <span className="text-xs text-green-400 font-black uppercase tracking-tighter">
-                  Live & Available
+                <span className="text-xs text-green-400 font-extrabold uppercase tracking-[0.12em]">
+                  Available
                 </span>
               </div>
 
               {/* Stats Module */}
               <div
-                className="absolute -bottom-6 -left-2 sm:bottom-6 sm:left-0 glass-card px-8 py-6 rounded-[2rem] border border-indigo-500/30 flex flex-col items-center shadow-2xl shadow-indigo-500/10 floating"
+                className="absolute -bottom-2 -left-1 sm:-bottom-1 sm:-left-3 glass-card px-6 py-4 rounded-2xl border-indigo-500/30 flex flex-col items-center shadow-2xl shadow-indigo-500/10 floating"
                 style={{ animationDelay: "1s" }}
               >
-                <span className="text-4xl font-black gradient-text mb-1">
+                <span className="text-3xl font-black gradient-text mb-0.5 leading-none">
                   6+
                 </span>
-                <span className="text-[10px] text-slate-500 font-black uppercase tracking-[0.2em]">
-                  Years Mastering
+                <span className="text-[10px] text-slate-500 font-extrabold uppercase tracking-[0.2em]">
+                  Years Experience
                 </span>
               </div>
             </div>
           </div>
 
           {/* ── Narrative Side ── */}
-          <div ref={contentRef} className="lg:pt-12">
-            <h2 className="reveal-item opacity-0 text-4xl sm:text-6xl xl:text-7xl font-black text-white mb-10 leading-[0.95] tracking-tighter">
+          <div ref={contentRef} className="min-w-0">
+            <h2 className="reveal-item opacity-0 display-2 text-white mb-6">
               Engineering the <br />
               <span className="gradient-text">Unimaginable.</span>
             </h2>
 
-            <p className="reveal-item opacity-0 text-slate-400 text-xl sm:text-2xl leading-relaxed mb-10 font-medium">
+            <p className="reveal-item opacity-0 text-lg sm:text-xl text-slate-300 leading-relaxed mb-5 font-medium">
               I transform complex logic into{" "}
-              <span className="text-white font-bold tracking-tight underline decoration-indigo-500/30 decoration-4 underline-offset-8 transition-all hover:decoration-indigo-500">
+              <span className="text-white font-bold underline decoration-indigo-500/40 decoration-[3px] underline-offset-[6px] transition-colors hover:decoration-indigo-400">
                 seamless architectures.
               </span>
             </p>
 
-            <p className="reveal-item opacity-0 text-slate-500 text-lg sm:text-xl leading-relaxed mb-14 max-w-2xl">
+            <p className="reveal-item opacity-0 body-copy mb-10 max-w-2xl">
               Specializing in the full lifecycle of high-stakes product
-              development. Currently spearheading technical innovations as and
+              development. Currently spearheading technical innovation and
               building next-gen systems at{" "}
               <a href="#contact" className="link-glow">
                 {personalInfo.company}
@@ -285,8 +259,8 @@ export default function About() {
               .
             </p>
 
-            {/* Tech Attribute Bento Box */}
-            <div className="reveal-item opacity-0 grid grid-cols-1 sm:grid-cols-2 gap-6 mb-16">
+            {/* Attribute grid */}
+            <div className="reveal-item opacity-0 grid grid-cols-1 sm:grid-cols-2 gap-4">
               {[
                 { label: "Core Expertise", value: "PHP / Node.js Ecosystems" },
                 {
@@ -301,31 +275,29 @@ export default function About() {
               ].map((item, i) => (
                 <div
                   key={i}
-                  className="group gap-4 rounded-2xl bg-white/5 border border-white/5 hover:border-indigo-500/20 hover:bg-white/[0.07] transition-all duration-300"
+                  className="group surface-soft rounded-2xl p-5 hover:border-indigo-500/25 hover:bg-white/[0.05] transition-all duration-300"
                 >
-                  <div style={{ padding: "10px" }}>
-                    <p className="text-[10px] text-slate-600 font-black uppercase tracking-widest mb-2 group-hover:text-indigo-400 transition-colors uppercase leading-none">
-                      {item.label}
-                    </p>
-                    <p className="text-base text-slate-300 font-bold group-hover:text-white transition-colors">
-                      {item.value}
-                    </p>
-                  </div>
+                  <p className="text-[10px] text-slate-500 font-extrabold uppercase tracking-[0.16em] mb-2 group-hover:text-indigo-300 transition-colors leading-none">
+                    {item.label}
+                  </p>
+                  <p className="text-[15px] text-slate-200 font-semibold group-hover:text-white transition-colors leading-snug">
+                    {item.value}
+                  </p>
                 </div>
               ))}
             </div>
           </div>
         </div>
         {/* ── Performance Pillars ── */}
-        <div ref={cardsRef} className="relative pt-16 sm:pt-20 lg:pt-32">
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-12">
+        <div ref={cardsRef} className="relative">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6">
             {highlights.map((item, i) => (
-              <div
+              <article
                 key={i}
-                className="highlight-card opacity-0 glass-card p-7 sm:p-9 rounded-[1.75rem] sm:rounded-[2.5rem] border border-white/5 hover:border-indigo-500/20 transition-all duration-700 group"
+                className="highlight-card opacity-0 glass-card glass-card-lift p-7 sm:p-8 rounded-3xl group"
               >
                 <div
-                  className="w-14 h-14 sm:w-16 sm:h-16 rounded-[1.25rem] sm:rounded-[1.5rem] flex items-center justify-center mb-7 sm:mb-10 transition-all duration-700 group-hover:scale-110 group-hover:shadow-[0_0_30px_rgba(99,102,241,0.3)]"
+                  className="w-14 h-14 rounded-2xl flex items-center justify-center mb-6 transition-all duration-500 group-hover:scale-110 group-hover:shadow-[0_0_30px_rgba(99,102,241,0.3)]"
                   style={{
                     background: `${item.color}15`,
                     border: `1px solid ${item.color}30`,
@@ -334,16 +306,13 @@ export default function About() {
                 >
                   {item.icon}
                 </div>
-                <h4 className="text-xl sm:text-2xl font-black text-white mb-3 sm:mb-5 tracking-tight group-hover:translate-x-1 transition-transform">
+                <h3 className="heading-3 text-white mb-3 group-hover:text-indigo-200 transition-colors">
                   {item.title}
-                </h4>
-                <p className="text-slate-500 text-sm sm:text-base leading-relaxed font-medium">
+                </h3>
+                <p className="text-slate-400 text-sm sm:text-[15px] leading-relaxed">
                   {item.desc}
                 </p>
-                <div className="mt-6 sm:mt-8 flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-indigo-400 opacity-0 group-hover:opacity-100 transition-all translate-x-[-10px] group-hover:translate-x-0">
-                  Learn More <ChevronRight size={14} />
-                </div>
-              </div>
+              </article>
             ))}
           </div>
         </div>
