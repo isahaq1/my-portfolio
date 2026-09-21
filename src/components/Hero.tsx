@@ -144,8 +144,18 @@ export default function Hero() {
   return (
     <section
       id="home"
-      className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-mesh grid-bg"
+      className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-mesh aurora-bg"
     >
+      {/* Aurora ribbons — the backdrop's main character */}
+      <div className="aurora" aria-hidden>
+        <span className="aurora-band aurora-band-1" />
+        <span className="aurora-band aurora-band-2" />
+        <span className="aurora-band aurora-band-3" />
+      </div>
+
+      {/* Light falling from above, so the scene has a source */}
+      <div className="aurora-beam" aria-hidden />
+
       {/* Gradient blobs */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="hero-blob-1 absolute -top-48 -left-48 w-[560px] h-[560px] rounded-full bg-indigo-500/10 blur-[110px]" />

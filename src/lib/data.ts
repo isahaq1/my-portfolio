@@ -189,7 +189,7 @@ export const projects = [
   },
   {
     id: 2,
-    title: "Barcode & QR Code Generator",
+    title: "Barcode & QR Generator — Laravel",
     description:
       "Open-source Composer package for Laravel and PHP. Supports 32+ barcode and QR formats including Code128, QR Code, PDF417, and more, with multiple output formats.",
     tech: ["PHP", "Laravel", "Composer", "Open Source"],
@@ -205,6 +205,27 @@ export const projects = [
     stats: {
       formats: "32+",
       version: "v1.4.0",
+      license: "MIT",
+    },
+  },
+  {
+    id: 16,
+    title: "Barcode & QR Generator — Node.js",
+    description:
+      "Universal barcode and QR generator for Node.js and the browser. Covers 45 symbologies across linear, EAN/UPC, postal, and 2D matrix families, with PNG, SVG, HTML, and PDF output, batch generation, logo and watermark support, a CLI, and Express integration.",
+    tech: ["Node.js", "Browser", "CLI", "NPM", "Open Source"],
+    category: "Open Source",
+    featured: true,
+    link: "https://www.npmjs.com/package/@isahaq/barcode",
+    github: "https://github.com/isahaq1/npm-barcodegenerator",
+    color: "#06b6d4",
+    registry: "NPM",
+    icon: "🏷️",
+    install: "npm install @isahaq/barcode",
+    summary: "45 symbologies, PNG/SVG/HTML/PDF output",
+    stats: {
+      symbologies: "45",
+      version: "v2.0.0",
       license: "MIT",
     },
   },

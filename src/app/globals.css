@@ -333,30 +333,123 @@
       var(--bg-primary);
   }
 
-  /* Grid pattern lives on a pseudo-element so its fade never masks content */
-  .grid-bg {
+  /* ---- Hero aurora backdrop ----
+     Replaces the old square grid. Three blurred ribbons drift behind the
+     content, over a fine diamond-lattice texture. The lattice is offset on
+     two layers so it never reads as a boxy grid. */
+  .aurora-bg {
     position: relative;
+    isolation: isolate;
   }
 
-  .grid-bg::before {
+  /* Texture layer: sits on a pseudo-element so its fade never masks content */
+  .aurora-bg::before {
     content: "";
     position: absolute;
     inset: 0;
     pointer-events: none;
+    z-index: 0;
     background-image:
-      linear-gradient(rgba(99, 102, 241, 0.06) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(99, 102, 241, 0.06) 1px, transparent 1px);
-    background-size: 56px 56px;
+      radial-gradient(rgba(165, 180, 252, 0.17) 1px, transparent 1px),
+      radial-gradient(rgba(99, 102, 241, 0.14) 1px, transparent 1px);
+    background-size: 34px 34px;
+    background-position:
+      0 0,
+      17px 17px;
     mask-image: radial-gradient(
-      ellipse 70% 60% at 50% 40%,
-      #000 40%,
+      ellipse 72% 62% at 50% 38%,
+      #000 32%,
       transparent 100%
     );
     -webkit-mask-image: radial-gradient(
-      ellipse 70% 60% at 50% 40%,
-      #000 40%,
+      ellipse 72% 62% at 50% 38%,
+      #000 32%,
       transparent 100%
     );
+  }
+
+  .aurora {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .aurora-band {
+    position: absolute;
+    left: -30%;
+    width: 160%;
+    height: 25vh;
+    min-height: 175px;
+    border-radius: 50%;
+    filter: blur(72px);
+    will-change: transform;
+  }
+
+  /* `rotate` is its own property, so the transform animation keeps the tilt */
+  .aurora-band-1 {
+    top: -9vh;
+    rotate: -7deg;
+    opacity: 0.6;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(99, 102, 241, 0.5) 38%,
+      rgba(129, 140, 248, 0.34) 60%,
+      transparent 100%
+    );
+    animation: aurora-sweep 26s ease-in-out infinite;
+  }
+
+  .aurora-band-2 {
+    top: 34vh;
+    rotate: 5deg;
+    opacity: 0.52;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(168, 85, 247, 0.42) 42%,
+      rgba(217, 70, 239, 0.24) 66%,
+      transparent 100%
+    );
+    animation: aurora-sweep 34s ease-in-out infinite reverse;
+  }
+
+  .aurora-band-3 {
+    bottom: -7vh;
+    rotate: -3deg;
+    opacity: 0.48;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(6, 182, 212, 0.34) 46%,
+      rgba(45, 212, 191, 0.2) 70%,
+      transparent 100%
+    );
+    animation: aurora-sweep 42s ease-in-out infinite;
+  }
+
+  /* Soft beam of light falling from the top, gives the scene a source */
+  .aurora-beam {
+    position: absolute;
+    top: -14%;
+    left: 50%;
+    width: 78%;
+    height: 78%;
+    pointer-events: none;
+    z-index: 0;
+    transform: translateX(-50%);
+    background: conic-gradient(
+      from 186deg at 50% 0%,
+      transparent 0deg,
+      rgba(165, 180, 252, 0.2) 5deg,
+      rgba(129, 140, 248, 0.09) 11deg,
+      transparent 22deg
+    );
+    filter: blur(22px);
+    mask-image: linear-gradient(#000 0%, transparent 85%);
+    -webkit-mask-image: linear-gradient(#000 0%, transparent 85%);
   }
 
   .glow-primary {
@@ -1301,6 +1394,16 @@
   50% {
     transform: translateY(8px);
     opacity: 0.4;
+  }
+}
+
+@keyframes aurora-sweep {
+  0%,
+  100% {
+    transform: translate3d(-7%, 0, 0) scaleY(1);
+  }
+  50% {
+    transform: translate3d(7%, 2%, 0) scaleY(1.18);
   }
 }
 

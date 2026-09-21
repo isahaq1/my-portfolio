@@ -92,6 +92,15 @@ const SATELLITES = [
   },
 ];
 
+const BRIGHT_STARS = [
+  { x: 96, y: 104, s: 7, o: 0.75, d: 4.5 },
+  { x: 498, y: 88, s: 6, o: 0.6, d: 6 },
+  { x: 542, y: 336, s: 5.5, o: 0.5, d: 5.2 },
+  { x: 74, y: 372, s: 6.5, o: 0.55, d: 7 },
+  { x: 236, y: 542, s: 5, o: 0.45, d: 5.8 },
+  { x: 404, y: 520, s: 6, o: 0.5, d: 6.6 },
+];
+
 const CX = 300;
 const CY = 300;
 
@@ -125,7 +134,7 @@ export default function OrbitSystem() {
         repeat: -1,
         yoyo: true,
         ease: "sine.inOut",
-        transformOrigin: `${CX}px ${CY}px`,
+        svgOrigin: `${CX} ${CY}`,
       });
 
       gsap.to(".planet-atmo", {
@@ -135,7 +144,7 @@ export default function OrbitSystem() {
         repeat: -1,
         yoyo: true,
         ease: "sine.inOut",
-        transformOrigin: `${CX}px ${CY}px`,
+        svgOrigin: `${CX} ${CY}`,
       });
 
       gsap.fromTo(
@@ -150,7 +159,7 @@ export default function OrbitSystem() {
         duration: 3.2,
         repeat: -1,
         ease: "power2.out",
-        transformOrigin: `${CX}px ${CY}px`,
+        svgOrigin: `${CX} ${CY}`,
         stagger: 1.07,
       });
 
@@ -159,7 +168,7 @@ export default function OrbitSystem() {
         duration: 20,
         repeat: -1,
         ease: "none",
-        transformOrigin: `${CX}px ${CY}px`,
+        svgOrigin: `${CX} ${CY}`,
       });
     }, containerRef);
 
@@ -251,19 +260,54 @@ export default function OrbitSystem() {
             <stop offset="100%" stopColor="transparent" />
           </radialGradient>
 
+          {/* Central glow: lifts the middle so the planet reads first */}
+          <radialGradient id="spaceBg" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stopColor="#242263" stopOpacity="0.5" />
+            <stop offset="40%" stopColor="#171644" stopOpacity="0.3" />
+            <stop offset="72%" stopColor="#0b0a24" stopOpacity="0.14" />
+            <stop offset="100%" stopColor="#050510" stopOpacity="0" />
+          </radialGradient>
+
+          {/* Day/night terminator, lit from the upper left */}
+          <radialGradient id="termShadow" cx="30%" cy="27%" r="80%">
+            <stop offset="0%" stopColor="#000010" stopOpacity="0" />
+            <stop offset="52%" stopColor="#05051a" stopOpacity="0.18" />
+            <stop offset="82%" stopColor="#03030f" stopOpacity="0.58" />
+            <stop offset="100%" stopColor="#020208" stopOpacity="0.82" />
+          </radialGradient>
+
+          {/* Rim light along the illuminated limb */}
+          <linearGradient id="rimGrad" x1="12%" y1="6%" x2="88%" y2="94%">
+            <stop offset="0%" stopColor="#eef2ff" stopOpacity="0.9" />
+            <stop offset="38%" stopColor="#a5b4fc" stopOpacity="0.22" />
+            <stop offset="100%" stopColor="#818cf8" stopOpacity="0" />
+          </linearGradient>
+
           {/* Nebula blobs */}
-          <radialGradient id="nb1" cx="25%" cy="25%" r="60%">
-            <stop offset="0%" stopColor="#6366f1" stopOpacity="0.10" />
+          <radialGradient id="nb1" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stopColor="#6366f1" stopOpacity="0.16" />
+            <stop offset="55%" stopColor="#4f46e5" stopOpacity="0.06" />
             <stop offset="100%" stopColor="transparent" />
           </radialGradient>
-          <radialGradient id="nb2" cx="75%" cy="75%" r="60%">
-            <stop offset="0%" stopColor="#a855f7" stopOpacity="0.08" />
+          <radialGradient id="nb2" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stopColor="#a855f7" stopOpacity="0.15" />
+            <stop offset="60%" stopColor="#7e22ce" stopOpacity="0.05" />
             <stop offset="100%" stopColor="transparent" />
           </radialGradient>
-          <radialGradient id="nb3" cx="80%" cy="20%" r="55%">
-            <stop offset="0%" stopColor="#06b6d4" stopOpacity="0.06" />
+          <radialGradient id="nb3" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stopColor="#06b6d4" stopOpacity="0.12" />
             <stop offset="100%" stopColor="transparent" />
           </radialGradient>
+          <radialGradient id="nb4" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stopColor="#ec4899" stopOpacity="0.08" />
+            <stop offset="100%" stopColor="transparent" />
+          </radialGradient>
+
+          {/* Soft bloom for the brightest stars */}
+          <filter id="fstar" x="-300%" y="-300%" width="700%" height="700%">
+            <feGaussianBlur stdDeviation="2" result="b" />
+            <feComposite in="SourceGraphic" in2="b" operator="over" />
+          </filter>
 
           {/* Filters */}
           <filter id="fpl" x="-60%" y="-60%" width="220%" height="220%">
@@ -332,10 +376,14 @@ export default function OrbitSystem() {
           ))}
         </defs>
 
+        {/* ── Deep-space glow: soft, no hard edge ── */}
+        <ellipse cx={CX} cy={CY} rx="300" ry="300" fill="url(#spaceBg)" />
+
         {/* ── Nebula clouds ── */}
-        <ellipse cx="130" cy="130" rx="210" ry="190" fill="url(#nb1)" />
-        <ellipse cx="470" cy="470" rx="175" ry="160" fill="url(#nb2)" />
-        <ellipse cx="480" cy="110" rx="150" ry="140" fill="url(#nb3)" />
+        <ellipse cx="150" cy="160" rx="215" ry="185" fill="url(#nb1)" />
+        <ellipse cx="455" cy="455" rx="190" ry="170" fill="url(#nb2)" />
+        <ellipse cx="470" cy="135" rx="165" ry="150" fill="url(#nb3)" />
+        <ellipse cx="180" cy="450" rx="150" ry="135" fill="url(#nb4)" />
 
         {/* ── Stars ── */}
         {stars.map((s) => (
@@ -348,6 +396,25 @@ export default function OrbitSystem() {
             fill="#c7d2fe"
             opacity={s.opacity}
           />
+        ))}
+
+        {/* ── A few brighter stars for depth ── */}
+        {BRIGHT_STARS.map((b, i) => (
+          <g key={`bs_${i}`} filter="url(#fstar)" opacity={b.o}>
+            <circle cx={b.x} cy={b.y} r="1.5" fill="#fff" />
+            <path
+              d={`M ${b.x - b.s} ${b.y} L ${b.x} ${b.y} L ${b.x + b.s} ${b.y} M ${b.x} ${b.y - b.s} L ${b.x} ${b.y} L ${b.x} ${b.y + b.s}`}
+              stroke="#e0e7ff"
+              strokeWidth="0.7"
+              opacity="0.7"
+            />
+            <animate
+              attributeName="opacity"
+              values={`${b.o};${b.o * 0.35};${b.o}`}
+              dur={`${b.d}s`}
+              repeatCount="indefinite"
+            />
+          </g>
         ))}
 
         {/* ── Saturn ring (behind planet) ── */}
@@ -574,55 +641,60 @@ export default function OrbitSystem() {
             filter="url(#fpl)"
           />
 
-          {/* Surface grid + rings */}
-          <g clipPath="url(#planetClip)" opacity="0.16">
-            <line
-              x1={CX - 60}
-              y1={CY - 24}
-              x2={CX + 60}
-              y2={CY - 24}
-              stroke="white"
-              strokeWidth="0.5"
+          {/* Surface: soft cloud banding rather than a hard wireframe */}
+          <g clipPath="url(#planetClip)">
+            <ellipse
+              cx={CX}
+              cy={CY - 30}
+              rx="58"
+              ry="7"
+              fill="#e0e7ff"
+              opacity="0.05"
             />
-            <line
-              x1={CX - 60}
-              y1={CY + 24}
-              x2={CX + 60}
-              y2={CY + 24}
-              stroke="white"
-              strokeWidth="0.5"
+            <ellipse
+              cx={CX}
+              cy={CY - 10}
+              rx="60"
+              ry="9"
+              fill="#c7d2fe"
+              opacity="0.045"
             />
-            <line
-              x1={CX - 24}
-              y1={CY - 60}
-              x2={CX - 24}
-              y2={CY + 60}
-              stroke="white"
-              strokeWidth="0.5"
+            <ellipse
+              cx={CX}
+              cy={CY + 14}
+              rx="59"
+              ry="8"
+              fill="#a5b4fc"
+              opacity="0.05"
             />
-            <line
-              x1={CX + 24}
-              y1={CY - 60}
-              x2={CX + 24}
-              y2={CY + 60}
-              stroke="white"
-              strokeWidth="0.5"
+            <ellipse
+              cx={CX}
+              cy={CY + 36}
+              rx="52"
+              ry="6"
+              fill="#c7d2fe"
+              opacity="0.04"
             />
-            <circle
+            {/* Two faint latitude lines keep a hint of the instrument look */}
+            <ellipse
               cx={CX}
               cy={CY}
-              r="34"
+              rx="60"
+              ry="20"
               fill="none"
               stroke="white"
               strokeWidth="0.5"
+              opacity="0.07"
             />
-            <circle
+            <ellipse
               cx={CX}
               cy={CY}
-              r="18"
+              rx="60"
+              ry="44"
               fill="none"
               stroke="white"
               strokeWidth="0.5"
+              opacity="0.05"
             />
           </g>
 
@@ -638,15 +710,37 @@ export default function OrbitSystem() {
             clipPath="url(#planetClip)"
           />
 
+          {/* Day/night terminator: makes the disc read as a lit sphere */}
+          <circle
+            cx={CX}
+            cy={CY}
+            r="60"
+            fill="url(#termShadow)"
+            clipPath="url(#planetClip)"
+            className="pointer-events-none"
+          />
+
+          {/* Rim light on the illuminated limb */}
+          <circle
+            cx={CX}
+            cy={CY}
+            r="60"
+            fill="none"
+            stroke="url(#rimGrad)"
+            strokeWidth="1.6"
+            className="pointer-events-none"
+          />
+
           {/* Specular highlight */}
           <ellipse
-            cx={CX - 20}
-            cy={CY - 18}
-            rx="22"
-            ry="14"
+            cx={CX - 22}
+            cy={CY - 20}
+            rx="20"
+            ry="12"
             fill="white"
-            opacity="0.065"
-            transform={`rotate(-30,${CX - 20},${CY - 18})`}
+            opacity="0.11"
+            transform={`rotate(-30,${CX - 22},${CY - 20})`}
+            clipPath="url(#planetClip)"
           />
         </g>
 
