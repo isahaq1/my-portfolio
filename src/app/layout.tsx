@@ -17,10 +17,18 @@ export const metadata: Metadata = {
   description:
     "Senior Full Stack Developer at Paragon Group. Specializing in PHP, Laravel, Node.js, React, Next.js, and DevOps. Building robust enterprise-level web solutions.",
   keywords: [
+    "isahaq",
+    "hmisahaq",
     "HM Isahaq",
+    "fullstackdeveloper",
     "Full Stack Developer",
+    "software",
+    "software engineer",
+    "software developer",
     "Senior Developer",
+    "laravel",
     "Laravel",
+    "nodejs",
     "Node.js",
     "React",
     "Next.js",
